@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/stop-outcome-model.json",
+  "title": "Stop Outcome Model Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["stop_outcome"],
+  "properties": {
+    "stop_outcome": {
+      "type": "string",
+      "enum": [
+        "blocked",
+        "insufficient_input",
+        "unsupported",
+        "requires_human_review"
+      ]
+    }
+  }
+}

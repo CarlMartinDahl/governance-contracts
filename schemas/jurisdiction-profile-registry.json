@@ -1,0 +1,115 @@
+{
+  "$id": "https://governance-contracts.invalid/schemas/jurisdiction-profile-registry.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Jurisdiction Profile Registry",
+  "type": "object",
+  "required": ["SWE_BODELNING", "CMD_PROFILE"],
+  "properties": {
+    "SWE_BODELNING": {
+      "$ref": "#/$defs/sweBodelningJurisdictionProfileRegistryEntry"
+    },
+    "CMD_PROFILE": {
+      "$ref": "#/$defs/cmdJurisdictionProfileRegistryEntry"
+    }
+  },
+  "patternProperties": {
+    "^[A-Z0-9_]+$": {
+      "$ref": "#/$defs/jurisdictionProfileRegistryEntry"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "jurisdictionProfileCapabilityFlags": {
+      "type": "object",
+      "required": [
+        "profile_inputs",
+        "release_eval",
+        "profile_dossier",
+        "export_package",
+        "export_package_json_artifact",
+        "export_package_markdown_artifact",
+        "export_package_pdf_artifact",
+        "export_package_docx_artifact",
+        "export_package_bundle_manifest",
+        "export_package_bundle_archive_artifact"
+      ],
+      "properties": {
+        "profile_inputs": {
+          "type": "boolean"
+        },
+        "release_eval": {
+          "type": "boolean"
+        },
+        "profile_dossier": {
+          "type": "boolean"
+        },
+        "export_package": {
+          "type": "boolean"
+        },
+        "export_package_json_artifact": {
+          "type": "boolean"
+        },
+        "export_package_markdown_artifact": {
+          "type": "boolean"
+        },
+        "export_package_pdf_artifact": {
+          "type": "boolean"
+        },
+        "export_package_docx_artifact": {
+          "type": "boolean"
+        },
+        "export_package_bundle_manifest": {
+          "type": "boolean"
+        },
+        "export_package_bundle_archive_artifact": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "jurisdictionProfileRegistryEntry": {
+      "type": "object",
+      "required": ["jurisdiction_profile_key", "capabilities"],
+      "properties": {
+        "jurisdiction_profile_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capabilities": {
+          "$ref": "#/$defs/jurisdictionProfileCapabilityFlags"
+        }
+      },
+      "additionalProperties": false
+    },
+    "sweBodelningJurisdictionProfileRegistryEntry": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/jurisdictionProfileRegistryEntry"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "jurisdiction_profile_key": {
+              "const": "SWE_BODELNING"
+            }
+          }
+        }
+      ]
+    },
+    "cmdJurisdictionProfileRegistryEntry": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/jurisdictionProfileRegistryEntry"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "jurisdiction_profile_key": {
+              "const": "CMD_PROFILE"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/human-review-questions.json",
+  "title": "Human Review Questions Contract Scaffold",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_id",
+    "contract_version",
+    "packet_ref",
+    "questions"
+  ],
+  "properties": {
+    "contract_id": {
+      "type": "string",
+      "const": "human_review.review_questions"
+    },
+    "contract_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "packet_ref": {
+      "type": "string",
+      "pattern": "^pkt_[a-z0-9][a-z0-9_-]{0,59}$"
+    },
+    "questions": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "$ref": "#/$defs/questionRow"
+      }
+    }
+  },
+  "$defs": {
+    "questionRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "question_ref",
+        "declaration_origin",
+        "declared_question_text",
+        "source_refs",
+        "chronology_entry_refs",
+        "claim_refs",
+        "gap_refs"
+      ],
+      "properties": {
+        "question_ref": {
+          "type": "string",
+          "pattern": "^qst_[a-z0-9][a-z0-9_-]{0,59}$"
+        },
+        "declaration_origin": {
+          "type": "string",
+          "const": "HUMAN_DECLARED"
+        },
+        "declared_question_text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 0,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^src_[a-z0-9][a-z0-9_-]{0,59}$"
+          }
+        },
+        "chronology_entry_refs": {
+          "type": "array",
+          "minItems": 0,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^chr_[a-z0-9][a-z0-9_-]{0,59}$"
+          }
+        },
+        "claim_refs": {
+          "type": "array",
+          "minItems": 0,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^clm_[a-z0-9][a-z0-9_-]{0,59}$"
+          }
+        },
+        "gap_refs": {
+          "type": "array",
+          "minItems": 0,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^gap_[a-z0-9][a-z0-9_-]{0,59}$"
+          }
+        }
+      },
+      "anyOf": [
+        {
+          "properties": {
+            "source_refs": {
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "properties": {
+            "chronology_entry_refs": {
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "properties": {
+            "claim_refs": {
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "properties": {
+            "gap_refs": {
+              "minItems": 1
+            }
+          }
+        }
+      ]
+    }
+  }
+}

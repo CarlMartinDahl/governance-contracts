@@ -1,0 +1,14 @@
+title = "Governance Contracts public release"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Known governance labels that resemble generic API keys"
+regexTarget = "match"
+regexes = [
+  '''admin/support access-control model''',
+  '''retention/deletion/purge/erasure''',
+  '''GAC-TM-003_CASE_CONTEXT_ACCESS_CONTROL_PARTIAL''',
+  '''RP-SG-014_AUDIT_ACCESS_LOG_DEPENDENCY_GAP''',
+]

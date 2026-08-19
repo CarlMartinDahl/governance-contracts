@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/human-review-questions-validator-result.json",
+  "title": "Human Review Questions Validator Result Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "valid",
+    "contractKind",
+    "version",
+    "errors"
+  ],
+  "properties": {
+    "valid": {
+      "type": "boolean"
+    },
+    "contractKind": {
+      "type": "string",
+      "const": "HUMAN_REVIEW_QUESTIONS_VALIDATOR_BOUNDARY"
+    },
+    "version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "errors": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "code": {
+                "const": "required_field_missing"
+              },
+              "path": {
+                "oneOf": [
+                  {
+                    "enum": [
+                      "$.contract_id",
+                      "$.contract_version",
+                      "$.packet_ref",
+                      "$.questions"
+                    ]
+                  },
+                  {
+                    "pattern": "^\\$\\.questions\\[(0|[1-9][0-9]*)\\]\\.(question_ref|declaration_origin|declared_question_text|source_refs|chronology_entry_refs|claim_refs|gap_refs)$"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "unexpected_field"
+              },
+              "path": {
+                "oneOf": [
+                  {
+                    "const": "$"
+                  },
+                  {
+                    "pattern": "^\\$\\.questions\\[(0|[1-9][0-9]*)\\]$"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "invalid_field_type"
+              },
+              "path": {
+                "oneOf": [
+                  {
+                    "enum": [
+                      "$",
+                      "$.contract_id",
+                      "$.contract_version",
+                      "$.packet_ref",
+                      "$.questions"
+                    ]
+                  },
+                  {
+                    "pattern": "^\\$\\.questions\\[(0|[1-9][0-9]*)\\]$"
+                  },
+                  {
+                    "pattern": "^\\$\\.questions\\[(0|[1-9][0-9]*)\\]\\.(question_ref|declaration_origin|declared_question_text|source_refs|chronology_entry_refs|claim_refs|gap_refs)$"
+                  },
+                  {
+                    "pattern": "^\\$\\.questions\\[(0|[1-9][0-9]*)\\]\\.(source_refs|chronology_entry_refs|claim_refs|gap_refs)\\[(0|[1-9][0-9]*)\\]$"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "invalid_field_value"
+              },
+              "path": {
+                "oneOf": [
+                  {
+                    "enum": [
+                      "$.contract_id",
+                      "$.contract_version",
+                      "$.packet_ref"
+                    ]
+                  },
+                  {
+                    "pattern": "^\\$\\.questions\\[(0|[1-9][0-9]*)\\]\\.(question_ref|declaration_origin|declared_question_text)$"
+                  },
+                  {
+                    "pattern": "^\\$\\.questions\\[(0|[1-9][0-9]*)\\]\\.(source_refs|chronology_entry_refs|claim_refs|gap_refs)\\[(0|[1-9][0-9]*)\\]$"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "question_reference_required"
+              },
+              "path": {
+                "pattern": "^\\$\\.questions\\[(0|[1-9][0-9]*)\\]$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "duplicate_question_ref"
+              },
+              "path": {
+                "pattern": "^\\$\\.questions\\[(0|[1-9][0-9]*)\\]\\.question_ref$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "duplicate_source_ref"
+              },
+              "path": {
+                "pattern": "^\\$\\.questions\\[(0|[1-9][0-9]*)\\]\\.source_refs\\[(0|[1-9][0-9]*)\\]$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "duplicate_chronology_entry_ref"
+              },
+              "path": {
+                "pattern": "^\\$\\.questions\\[(0|[1-9][0-9]*)\\]\\.chronology_entry_refs\\[(0|[1-9][0-9]*)\\]$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "duplicate_claim_ref"
+              },
+              "path": {
+                "pattern": "^\\$\\.questions\\[(0|[1-9][0-9]*)\\]\\.claim_refs\\[(0|[1-9][0-9]*)\\]$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "duplicate_gap_ref"
+              },
+              "path": {
+                "pattern": "^\\$\\.questions\\[(0|[1-9][0-9]*)\\]\\.gap_refs\\[(0|[1-9][0-9]*)\\]$"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "valid": {
+          "const": true
+        },
+        "errors": {
+          "maxItems": 0
+        }
+      }
+    },
+    {
+      "properties": {
+        "valid": {
+          "const": false
+        },
+        "errors": {
+          "minItems": 1
+        }
+      }
+    }
+  ]
+}

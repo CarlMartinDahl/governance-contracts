@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/cmd-export-package.json",
+  "title": "CMD_PROFILE Export Package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "jurisdiction_profile_key",
+    "export_version",
+    "dossier_fingerprint",
+    "canonical_source",
+    "profile_dossier_snapshot",
+    "generated_at",
+    "manifest"
+  ],
+  "properties": {
+    "jurisdiction_profile_key": {
+      "type": "string",
+      "const": "CMD_PROFILE"
+    },
+    "export_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dossier_fingerprint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "canonical_source": {
+      "$ref": "#/$defs/exportPackageCanonicalSource"
+    },
+    "profile_dossier_snapshot": {
+      "$ref": "https://governance-contracts.invalid/schemas/cmd-profile-dossier-snapshot.json"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "manifest": {
+      "$ref": "#/$defs/exportPackageManifest"
+    }
+  },
+  "$defs": {
+    "exportPackageCanonicalSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "release_eval_run_id",
+        "evaluator_version",
+        "jurisdiction_profile_key",
+        "persisted_at"
+      ],
+      "properties": {
+        "release_eval_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evaluator_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "jurisdiction_profile_key": {
+          "type": "string",
+          "const": "CMD_PROFILE"
+        },
+        "persisted_at": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "exportPackageManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "included_top_level_artifacts"
+      ],
+      "properties": {
+        "included_top_level_artifacts": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "canonical_source",
+              "profile_dossier_snapshot"
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        }
+      }
+    }
+  }
+}

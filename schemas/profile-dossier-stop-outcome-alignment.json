@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/profile-dossier-stop-outcome-alignment.json",
+  "title": "Profile Dossier Stop Outcome Alignment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "SWE_BODELNING",
+    "CMD_PROFILE"
+  ],
+  "properties": {
+    "SWE_BODELNING": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "release_gate",
+        "release_eval_freshness",
+        "canonical_stop_outcome",
+        "release_gate_reason_codes"
+      ],
+      "properties": {
+        "release_gate": {
+          "type": "string",
+          "const": "blocked"
+        },
+        "release_eval_freshness": {
+          "type": "string",
+          "const": "current"
+        },
+        "canonical_stop_outcome": {
+          "$ref": "./stop-outcome-model.json"
+        },
+        "release_gate_reason_codes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "governance_baseline_fail_closed_pending_completeness_support_policy",
+              "swe-bodelning-input-incomplete",
+              "swe-bodelning-support-incomplete"
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 3,
+          "maxItems": 3
+        }
+      }
+    },
+    "CMD_PROFILE": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "release_gate",
+        "release_eval_freshness",
+        "canonical_stop_outcome",
+        "release_gate_reason_codes"
+      ],
+      "properties": {
+        "release_gate": {
+          "type": "string",
+          "const": "blocked"
+        },
+        "release_eval_freshness": {
+          "type": "string",
+          "const": "current"
+        },
+        "canonical_stop_outcome": {
+          "$ref": "./stop-outcome-model.json"
+        },
+        "release_gate_reason_codes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "cmd-input-incomplete",
+              "cmd-runtime-not-implemented"
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 2,
+          "maxItems": 2
+        }
+      }
+    }
+  }
+}

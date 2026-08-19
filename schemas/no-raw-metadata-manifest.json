@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/no-raw-metadata-manifest.json",
+  "title": "No-Raw Metadata Manifest Contract Scaffold",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifest_id",
+    "manifest_version",
+    "manifest_contract",
+    "manifest_scope",
+    "source_layer_status",
+    "chunk_id",
+    "chunk_period_bucket",
+    "chunk_availability_status",
+    "sanitized_row_count_status",
+    "sanitized_marker_count_status",
+    "readiness_status",
+    "privacy_blocker_status",
+    "counter_context_status",
+    "unresolved_pointer_status",
+    "human_professional_review_status",
+    "validation_without_conclusion_status",
+    "manifest_integrity_status",
+    "manifest_provenance_status",
+    "metadata_acquisition_path_status",
+    "data_handling_unknowns_status",
+    "external_use_status",
+    "product_candidate_status"
+  ],
+  "properties": {
+    "manifest_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "manifest_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "manifest_contract": {
+      "type": "string",
+      "const": "NO_RAW_METADATA_MANIFEST_CONTRACT_DEFINED"
+    },
+    "manifest_scope": {
+      "type": "string",
+      "const": "DOCS_ONLY_CONTRACT_DEFINED"
+    },
+    "source_layer_status": {
+      "type": "string",
+      "enum": [
+        "TEXT_PRIMARY_CHUNK_ID_ONLY",
+        "NO_RAW_TEXT_INCLUDED",
+        "PDF_IMAGE_METADATA_NOT_OPENED",
+        "SOURCE_PACKAGE_NOT_OPENED"
+      ]
+    },
+    "chunk_id": {
+      "type": "string",
+      "enum": [
+        "chunk_001",
+        "chunk_002",
+        "chunk_003",
+        "chunk_004",
+        "chunk_005"
+      ]
+    },
+    "chunk_period_bucket": {
+      "type": "string",
+      "enum": [
+        "SANITIZED_PERIOD_BUCKET_ONLY",
+        "NO_EXACT_DATES_INCLUDED"
+      ]
+    },
+    "chunk_availability_status": {
+      "type": "string",
+      "const": "CHUNK_AVAILABILITY_NOT_EVIDENCED"
+    },
+    "sanitized_row_count_status": {
+      "type": "string",
+      "enum": [
+        "COUNT_SUMMARY_SAFE_IF_EVIDENCED",
+        "COUNT_SUMMARY_NOT_EVIDENCED"
+      ]
+    },
+    "sanitized_marker_count_status": {
+      "type": "string",
+      "enum": [
+        "MARKER_COUNT_SAFE_IF_EVIDENCED",
+        "MARKER_COUNT_NOT_EVIDENCED"
+      ]
+    },
+    "readiness_status": {
+      "type": "string",
+      "enum": [
+        "MANIFEST_INSTANCE_NOT_CREATED",
+        "METADATA_NOT_ACQUIRED",
+        "ACTUAL_MATRIX_NOT_CREATED"
+      ]
+    },
+    "privacy_blocker_status": {
+      "type": "string",
+      "const": "NO_PRIVATE_FACTS_INCLUDED"
+    },
+    "counter_context_status": {
+      "type": "string",
+      "enum": [
+        "VALIDATION_WITHOUT_CONCLUSION",
+        "HUMAN_PROFESSIONAL_REVIEW_REQUIRED"
+      ]
+    },
+    "unresolved_pointer_status": {
+      "type": "string",
+      "enum": [
+        "NO_SOURCE_LOCATOR_INCLUDED",
+        "SOURCE_PACKAGE_NOT_OPENED"
+      ]
+    },
+    "human_professional_review_status": {
+      "type": "string",
+      "const": "HUMAN_PROFESSIONAL_REVIEW_REQUIRED"
+    },
+    "validation_without_conclusion_status": {
+      "type": "string",
+      "const": "VALIDATION_WITHOUT_CONCLUSION"
+    },
+    "manifest_integrity_status": {
+      "type": "string",
+      "enum": [
+        "MANIFEST_INSTANCE_NOT_CREATED",
+        "VALIDATION_WITHOUT_CONCLUSION"
+      ]
+    },
+    "manifest_provenance_status": {
+      "type": "string",
+      "enum": [
+        "MANIFEST_INSTANCE_NOT_CREATED",
+        "VALIDATION_WITHOUT_CONCLUSION"
+      ]
+    },
+    "metadata_acquisition_path_status": {
+      "type": "string",
+      "const": "METADATA_NOT_ACQUIRED"
+    },
+    "data_handling_unknowns_status": {
+      "type": "string",
+      "enum": [
+        "VALIDATION_WITHOUT_CONCLUSION",
+        "HUMAN_PROFESSIONAL_REVIEW_REQUIRED"
+      ]
+    },
+    "external_use_status": {
+      "type": "string",
+      "const": "EXTERNAL_USE_NOT_AUTHORIZED"
+    },
+    "product_candidate_status": {
+      "type": "string",
+      "const": "PRODUCT_CANDIDATE_NONE"
+    }
+  }
+}

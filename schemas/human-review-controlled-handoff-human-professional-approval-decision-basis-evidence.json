@@ -1,0 +1,286 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/human-review-controlled-handoff-human-professional-approval-decision-basis-evidence.json",
+  "title": "Human Review Controlled Handoff Human/Professional Approval Decision Basis Evidence Contract Scaffold",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_id",
+    "contract_version",
+    "decision_basis_ref",
+    "approval_ref",
+    "review_session_ref",
+    "reviewer_ref",
+    "reviewer_role",
+    "decision",
+    "basis_subject_kind",
+    "basis_subject_ref",
+    "basis_posture",
+    "binding_issuer_ref",
+    "binding_provenance_ref",
+    "basis_lifecycle_posture",
+    "verification_posture",
+    "human_professional_review_required"
+  ],
+  "properties": {
+    "contract_id": {
+      "type": "string",
+      "const": "human_review.controlled_handoff_human_professional_approval_decision_basis_evidence"
+    },
+    "contract_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "decision_basis_ref": {
+      "type": "string",
+      "pattern": "^rvb_[a-z0-9][a-z0-9_-]{0,59}$"
+    },
+    "approval_ref": {
+      "type": "string",
+      "pattern": "^apr_[a-z0-9][a-z0-9_-]{0,59}$"
+    },
+    "review_session_ref": {
+      "type": "string",
+      "pattern": "^rvs_[a-z0-9][a-z0-9_-]{0,59}$"
+    },
+    "reviewer_ref": {
+      "type": "string",
+      "pattern": "^rvr_[a-z0-9][a-z0-9_-]{0,59}$"
+    },
+    "reviewer_role": {
+      "type": "string",
+      "enum": [
+        "HUMAN_REVIEWER",
+        "PROFESSIONAL_REVIEWER"
+      ]
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "HUMAN_PROFESSIONAL_GATE_APPROVED",
+        "HUMAN_PROFESSIONAL_GATE_CORRECTION_REQUIRED",
+        "HUMAN_PROFESSIONAL_GATE_REJECTED"
+      ]
+    },
+    "basis_subject_kind": {
+      "type": "string",
+      "enum": [
+        "SOURCE_REGISTER_SOURCE",
+        "REVIEW_CHRONOLOGY_ENTRY",
+        "ASSERTED_CLAIM",
+        "DECLARED_REVIEW_GAP",
+        "HUMAN_REVIEW_QUESTION",
+        "NO_CONCLUSION_NOTICE"
+      ]
+    },
+    "basis_subject_ref": {
+      "type": "string"
+    },
+    "basis_posture": {
+      "type": "string",
+      "const": "DECISION_BASIS_CANDIDATE_ONLY"
+    },
+    "binding_issuer_ref": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:-]{1,128}$",
+      "not": {
+        "anyOf": [
+          {
+            "enum": [
+              ".",
+              ".."
+            ]
+          },
+          {
+            "pattern": "^[Hh][Tt][Tt][Pp]:"
+          },
+          {
+            "pattern": "^[Hh][Tt][Tt][Pp][Ss]:"
+          },
+          {
+            "pattern": "^[Ff][Tt][Pp]:"
+          },
+          {
+            "pattern": "^[Ff][Ii][Ll][Ee]:"
+          },
+          {
+            "pattern": "^[Mm][Aa][Ii][Ll][Tt][Oo]:"
+          },
+          {
+            "pattern": "^[Dd][Aa][Tt][Aa]:"
+          },
+          {
+            "pattern": "^[Jj][Aa][Vv][Aa][Ss][Cc][Rr][Ii][Pp][Tt]:"
+          }
+        ]
+      }
+    },
+    "binding_provenance_ref": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:-]{1,128}$",
+      "not": {
+        "anyOf": [
+          {
+            "enum": [
+              ".",
+              ".."
+            ]
+          },
+          {
+            "pattern": "^[Hh][Tt][Tt][Pp]:"
+          },
+          {
+            "pattern": "^[Hh][Tt][Tt][Pp][Ss]:"
+          },
+          {
+            "pattern": "^[Ff][Tt][Pp]:"
+          },
+          {
+            "pattern": "^[Ff][Ii][Ll][Ee]:"
+          },
+          {
+            "pattern": "^[Mm][Aa][Ii][Ll][Tt][Oo]:"
+          },
+          {
+            "pattern": "^[Dd][Aa][Tt][Aa]:"
+          },
+          {
+            "pattern": "^[Jj][Aa][Vv][Aa][Ss][Cc][Rr][Ii][Pp][Tt]:"
+          }
+        ]
+      }
+    },
+    "basis_lifecycle_posture": {
+      "type": "string",
+      "enum": [
+        "DECISION_BASIS_DECLARED_ACTIVE",
+        "DECISION_BASIS_DECLARED_INACTIVE",
+        "DECISION_BASIS_DECLARED_REVOKED"
+      ]
+    },
+    "verification_posture": {
+      "type": "string",
+      "const": "NOT_VERIFIED_BY_CONTRACT"
+    },
+    "human_professional_review_required": {
+      "type": "boolean",
+      "const": true
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "basis_subject_kind"
+        ],
+        "properties": {
+          "basis_subject_kind": {
+            "const": "SOURCE_REGISTER_SOURCE"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "basis_subject_ref": {
+            "pattern": "^src_[a-z0-9][a-z0-9_-]{0,59}$"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "basis_subject_kind"
+        ],
+        "properties": {
+          "basis_subject_kind": {
+            "const": "REVIEW_CHRONOLOGY_ENTRY"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "basis_subject_ref": {
+            "pattern": "^chr_[a-z0-9][a-z0-9_-]{0,59}$"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "basis_subject_kind"
+        ],
+        "properties": {
+          "basis_subject_kind": {
+            "const": "ASSERTED_CLAIM"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "basis_subject_ref": {
+            "pattern": "^clm_[a-z0-9][a-z0-9_-]{0,59}$"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "basis_subject_kind"
+        ],
+        "properties": {
+          "basis_subject_kind": {
+            "const": "DECLARED_REVIEW_GAP"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "basis_subject_ref": {
+            "pattern": "^gap_[a-z0-9][a-z0-9_-]{0,59}$"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "basis_subject_kind"
+        ],
+        "properties": {
+          "basis_subject_kind": {
+            "const": "HUMAN_REVIEW_QUESTION"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "basis_subject_ref": {
+            "pattern": "^qst_[a-z0-9][a-z0-9_-]{0,59}$"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "basis_subject_kind"
+        ],
+        "properties": {
+          "basis_subject_kind": {
+            "const": "NO_CONCLUSION_NOTICE"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "basis_subject_ref": {
+            "pattern": "^ncn_[a-z0-9][a-z0-9_-]{0,59}$"
+          }
+        }
+      }
+    }
+  ]
+}

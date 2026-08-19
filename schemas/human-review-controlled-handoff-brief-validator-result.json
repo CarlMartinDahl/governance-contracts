@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/human-review-controlled-handoff-brief-validator-result.json",
+  "title": "Human Review Controlled Handoff Brief Validator Result Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "valid",
+    "contractKind",
+    "version",
+    "errors"
+  ],
+  "properties": {
+    "valid": {
+      "type": "boolean"
+    },
+    "contractKind": {
+      "type": "string",
+      "const": "HUMAN_REVIEW_CONTROLLED_HANDOFF_BRIEF_VALIDATOR_BOUNDARY"
+    },
+    "version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "errors": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "code": {
+                "const": "required_field_missing"
+              },
+              "path": {
+                "enum": [
+                  "$.contract_id",
+                  "$.contract_version",
+                  "$.packet_ref",
+                  "$.handoff_posture",
+                  "$.component_refs",
+                  "$.component_refs.source_register_ref",
+                  "$.component_refs.review_chronology_ref",
+                  "$.component_refs.asserted_claim_matrix_ref",
+                  "$.component_refs.declared_packet_review_gaps_ref",
+                  "$.component_refs.human_review_questions_ref",
+                  "$.component_refs.no_conclusion_notice_ref"
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "unexpected_field"
+              },
+              "path": {
+                "enum": [
+                  "$",
+                  "$.component_refs"
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "invalid_field_type"
+              },
+              "path": {
+                "enum": [
+                  "$",
+                  "$.contract_id",
+                  "$.contract_version",
+                  "$.packet_ref",
+                  "$.handoff_posture",
+                  "$.component_refs",
+                  "$.component_refs.source_register_ref",
+                  "$.component_refs.review_chronology_ref",
+                  "$.component_refs.asserted_claim_matrix_ref",
+                  "$.component_refs.declared_packet_review_gaps_ref",
+                  "$.component_refs.human_review_questions_ref",
+                  "$.component_refs.no_conclusion_notice_ref"
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "invalid_field_value"
+              },
+              "path": {
+                "enum": [
+                  "$.contract_id",
+                  "$.contract_version",
+                  "$.packet_ref",
+                  "$.handoff_posture",
+                  "$.component_refs.source_register_ref",
+                  "$.component_refs.review_chronology_ref",
+                  "$.component_refs.asserted_claim_matrix_ref",
+                  "$.component_refs.declared_packet_review_gaps_ref",
+                  "$.component_refs.human_review_questions_ref",
+                  "$.component_refs.no_conclusion_notice_ref"
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "duplicate_component_ref"
+              },
+              "path": {
+                "enum": [
+                  "$.component_refs.review_chronology_ref",
+                  "$.component_refs.asserted_claim_matrix_ref",
+                  "$.component_refs.declared_packet_review_gaps_ref",
+                  "$.component_refs.human_review_questions_ref",
+                  "$.component_refs.no_conclusion_notice_ref"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "valid": {
+          "const": true
+        },
+        "errors": {
+          "maxItems": 0
+        }
+      }
+    },
+    {
+      "properties": {
+        "valid": {
+          "const": false
+        },
+        "errors": {
+          "minItems": 1
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/human-review-no-conclusion-notice-validator-result.json",
+  "title": "Human Review No-Conclusion Notice Validator Result Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "valid",
+    "contractKind",
+    "version",
+    "errors"
+  ],
+  "properties": {
+    "valid": {
+      "type": "boolean"
+    },
+    "contractKind": {
+      "type": "string",
+      "const": "HUMAN_REVIEW_NO_CONCLUSION_NOTICE_VALIDATOR_BOUNDARY"
+    },
+    "version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "errors": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "code": {
+                "const": "required_field_missing"
+              },
+              "path": {
+                "oneOf": [
+                  {
+                    "enum": [
+                      "$.contract_id",
+                      "$.contract_version",
+                      "$.packet_ref",
+                      "$.notices"
+                    ]
+                  },
+                  {
+                    "pattern": "^\\$\\.notices\\[(0|[1-9][0-9]*)\\]\\.(notice_ref|declaration_origin|notice_code|notice_text|source_refs|chronology_entry_refs|claim_refs|gap_refs|question_refs)$"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "unexpected_field"
+              },
+              "path": {
+                "oneOf": [
+                  {
+                    "const": "$"
+                  },
+                  {
+                    "pattern": "^\\$\\.notices\\[(0|[1-9][0-9]*)\\]$"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "invalid_field_type"
+              },
+              "path": {
+                "oneOf": [
+                  {
+                    "enum": [
+                      "$",
+                      "$.contract_id",
+                      "$.contract_version",
+                      "$.packet_ref",
+                      "$.notices"
+                    ]
+                  },
+                  {
+                    "pattern": "^\\$\\.notices\\[(0|[1-9][0-9]*)\\]$"
+                  },
+                  {
+                    "pattern": "^\\$\\.notices\\[(0|[1-9][0-9]*)\\]\\.(notice_ref|declaration_origin|notice_code|notice_text|source_refs|chronology_entry_refs|claim_refs|gap_refs|question_refs)$"
+                  },
+                  {
+                    "pattern": "^\\$\\.notices\\[(0|[1-9][0-9]*)\\]\\.(source_refs|chronology_entry_refs|claim_refs|gap_refs|question_refs)\\[(0|[1-9][0-9]*)\\]$"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "invalid_field_value"
+              },
+              "path": {
+                "oneOf": [
+                  {
+                    "enum": [
+                      "$.contract_id",
+                      "$.contract_version",
+                      "$.packet_ref",
+                      "$.notices"
+                    ]
+                  },
+                  {
+                    "pattern": "^\\$\\.notices\\[(0|[1-9][0-9]*)\\]\\.(notice_ref|declaration_origin|notice_code|notice_text)$"
+                  },
+                  {
+                    "pattern": "^\\$\\.notices\\[(0|[1-9][0-9]*)\\]\\.(source_refs|chronology_entry_refs|claim_refs|gap_refs|question_refs)\\[(0|[1-9][0-9]*)\\]$"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "notice_reference_required"
+              },
+              "path": {
+                "pattern": "^\\$\\.notices\\[(0|[1-9][0-9]*)\\]$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "duplicate_notice_ref"
+              },
+              "path": {
+                "pattern": "^\\$\\.notices\\[(0|[1-9][0-9]*)\\]\\.notice_ref$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "duplicate_source_ref"
+              },
+              "path": {
+                "pattern": "^\\$\\.notices\\[(0|[1-9][0-9]*)\\]\\.source_refs\\[(0|[1-9][0-9]*)\\]$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "duplicate_chronology_entry_ref"
+              },
+              "path": {
+                "pattern": "^\\$\\.notices\\[(0|[1-9][0-9]*)\\]\\.chronology_entry_refs\\[(0|[1-9][0-9]*)\\]$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "duplicate_claim_ref"
+              },
+              "path": {
+                "pattern": "^\\$\\.notices\\[(0|[1-9][0-9]*)\\]\\.claim_refs\\[(0|[1-9][0-9]*)\\]$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "duplicate_gap_ref"
+              },
+              "path": {
+                "pattern": "^\\$\\.notices\\[(0|[1-9][0-9]*)\\]\\.gap_refs\\[(0|[1-9][0-9]*)\\]$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "duplicate_question_ref"
+              },
+              "path": {
+                "pattern": "^\\$\\.notices\\[(0|[1-9][0-9]*)\\]\\.question_refs\\[(0|[1-9][0-9]*)\\]$"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "valid": {
+          "const": true
+        },
+        "errors": {
+          "maxItems": 0
+        }
+      }
+    },
+    {
+      "properties": {
+        "valid": {
+          "const": false
+        },
+        "errors": {
+          "minItems": 1
+        }
+      }
+    }
+  ]
+}

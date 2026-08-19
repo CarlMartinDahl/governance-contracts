@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/human-review-source-register-validator-result.json",
+  "title": "Human Review Source Register Validator Result Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "valid",
+    "contractKind",
+    "version",
+    "errors"
+  ],
+  "properties": {
+    "valid": {
+      "type": "boolean"
+    },
+    "contractKind": {
+      "type": "string",
+      "const": "HUMAN_REVIEW_SOURCE_REGISTER_VALIDATOR_BOUNDARY"
+    },
+    "version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "errors": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "code": {
+                "const": "required_field_missing"
+              },
+              "path": {
+                "oneOf": [
+                  {
+                    "enum": [
+                      "$.contract_id",
+                      "$.contract_version",
+                      "$.packet_ref",
+                      "$.sources"
+                    ]
+                  },
+                  {
+                    "pattern": "^\\$\\.sources\\[(0|[1-9][0-9]*)\\]\\.(source_ref|declared_source_type|declared_label)$"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "unexpected_field"
+              },
+              "path": {
+                "oneOf": [
+                  {
+                    "const": "$"
+                  },
+                  {
+                    "pattern": "^\\$\\.sources\\[(0|[1-9][0-9]*)\\]$"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "invalid_field_type"
+              },
+              "path": {
+                "oneOf": [
+                  {
+                    "enum": [
+                      "$",
+                      "$.contract_id",
+                      "$.contract_version",
+                      "$.packet_ref",
+                      "$.sources"
+                    ]
+                  },
+                  {
+                    "pattern": "^\\$\\.sources\\[(0|[1-9][0-9]*)\\]$"
+                  },
+                  {
+                    "pattern": "^\\$\\.sources\\[(0|[1-9][0-9]*)\\]\\.(source_ref|declared_source_type|declared_label)$"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "invalid_field_value"
+              },
+              "path": {
+                "oneOf": [
+                  {
+                    "enum": [
+                      "$.contract_id",
+                      "$.contract_version",
+                      "$.packet_ref"
+                    ]
+                  },
+                  {
+                    "pattern": "^\\$\\.sources\\[(0|[1-9][0-9]*)\\]\\.(source_ref|declared_source_type|declared_label)$"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "duplicate_source_ref"
+              },
+              "path": {
+                "pattern": "^\\$\\.sources\\[(0|[1-9][0-9]*)\\]\\.source_ref$"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "valid": {
+          "const": true
+        },
+        "errors": {
+          "maxItems": 0
+        }
+      }
+    },
+    {
+      "properties": {
+        "valid": {
+          "const": false
+        },
+        "errors": {
+          "minItems": 1
+        }
+      }
+    }
+  ]
+}

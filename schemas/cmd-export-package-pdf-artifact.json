@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/cmd-export-package-pdf-artifact.json",
+  "title": "CMD_PROFILE Export Package PDF Artifact",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "artifact_type",
+    "filename",
+    "content_type",
+    "encoding",
+    "body_base64"
+  ],
+  "properties": {
+    "artifact_type": {
+      "type": "string",
+      "const": "export-package-pdf"
+    },
+    "filename": {
+      "type": "string",
+      "minLength": 1
+    },
+    "content_type": {
+      "type": "string",
+      "const": "application/pdf"
+    },
+    "encoding": {
+      "type": "string",
+      "const": "base64"
+    },
+    "body_base64": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

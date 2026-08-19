@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/swe-bodelning-export-package-json-artifact-projection.json",
+  "title": "SWE_BODELNING Export Package JSON Artifact Projection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "artifact_type",
+    "filename",
+    "content_type",
+    "encoding",
+    "body_utf8",
+    "snapshot_status"
+  ],
+  "properties": {
+    "artifact_type": {
+      "type": "string",
+      "const": "export-package-json"
+    },
+    "filename": {
+      "type": "string",
+      "minLength": 1
+    },
+    "content_type": {
+      "type": "string",
+      "const": "application/json"
+    },
+    "encoding": {
+      "type": "string",
+      "const": "utf-8"
+    },
+    "body_utf8": {
+      "type": "string",
+      "minLength": 1
+    },
+    "snapshot_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "snapshot_export_version_found",
+        "current_export_version",
+        "snapshot_is_current"
+      ],
+      "properties": {
+        "source": {
+          "type": "string",
+          "enum": [
+            "persisted-current",
+            "persisted-stale"
+          ]
+        },
+        "snapshot_export_version_found": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "current_export_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "snapshot_is_current": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

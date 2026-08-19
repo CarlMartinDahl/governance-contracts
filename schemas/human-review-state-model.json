@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/human-review-state-model.json",
+  "title": "Human Review State Model Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["review_state"],
+  "properties": {
+    "review_state": {
+      "type": "string",
+      "enum": [
+        "ASSERTED",
+        "APPEARS_IN_SUPPLIED_MATERIAL",
+        "NOT_ESTABLISHED",
+        "HUMAN_REVIEW_REQUIRED"
+      ]
+    }
+  }
+}

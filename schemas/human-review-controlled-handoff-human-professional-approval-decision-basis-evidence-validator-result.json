@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/human-review-controlled-handoff-human-professional-approval-decision-basis-evidence-validator-result.json",
+  "title": "Human Review Controlled Handoff Human/Professional Approval Decision Basis Evidence Validator Result Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "valid",
+    "contractKind",
+    "version",
+    "errors"
+  ],
+  "properties": {
+    "valid": {
+      "type": "boolean"
+    },
+    "contractKind": {
+      "type": "string",
+      "const": "HUMAN_REVIEW_CONTROLLED_HANDOFF_HUMAN_PROFESSIONAL_APPROVAL_DECISION_BASIS_EVIDENCE_VALIDATOR_BOUNDARY"
+    },
+    "version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "errors": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "code": {
+                "const": "required_field_missing"
+              },
+              "path": {
+                "enum": [
+                  "$.contract_id",
+                  "$.contract_version",
+                  "$.decision_basis_ref",
+                  "$.approval_ref",
+                  "$.review_session_ref",
+                  "$.reviewer_ref",
+                  "$.reviewer_role",
+                  "$.decision",
+                  "$.basis_subject_kind",
+                  "$.basis_subject_ref",
+                  "$.basis_posture",
+                  "$.binding_issuer_ref",
+                  "$.binding_provenance_ref",
+                  "$.basis_lifecycle_posture",
+                  "$.verification_posture",
+                  "$.human_professional_review_required"
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "unexpected_field"
+              },
+              "path": {
+                "const": "$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "invalid_field_type"
+              },
+              "path": {
+                "enum": [
+                  "$",
+                  "$.contract_id",
+                  "$.contract_version",
+                  "$.decision_basis_ref",
+                  "$.approval_ref",
+                  "$.review_session_ref",
+                  "$.reviewer_ref",
+                  "$.reviewer_role",
+                  "$.decision",
+                  "$.basis_subject_kind",
+                  "$.basis_subject_ref",
+                  "$.basis_posture",
+                  "$.binding_issuer_ref",
+                  "$.binding_provenance_ref",
+                  "$.basis_lifecycle_posture",
+                  "$.verification_posture",
+                  "$.human_professional_review_required"
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "invalid_field_value"
+              },
+              "path": {
+                "enum": [
+                  "$.contract_id",
+                  "$.contract_version",
+                  "$.decision_basis_ref",
+                  "$.approval_ref",
+                  "$.review_session_ref",
+                  "$.reviewer_ref",
+                  "$.reviewer_role",
+                  "$.decision",
+                  "$.basis_subject_kind",
+                  "$.basis_subject_ref",
+                  "$.basis_posture",
+                  "$.binding_issuer_ref",
+                  "$.binding_provenance_ref",
+                  "$.basis_lifecycle_posture",
+                  "$.verification_posture",
+                  "$.human_professional_review_required"
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "duplicate_reference"
+              },
+              "path": {
+                "enum": [
+                  "$.decision_basis_ref",
+                  "$.approval_ref",
+                  "$.review_session_ref",
+                  "$.reviewer_ref",
+                  "$.basis_subject_ref",
+                  "$.binding_issuer_ref",
+                  "$.binding_provenance_ref"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "valid": {
+          "const": true
+        },
+        "errors": {
+          "maxItems": 0
+        }
+      }
+    },
+    {
+      "properties": {
+        "valid": {
+          "const": false
+        },
+        "errors": {
+          "minItems": 1
+        }
+      }
+    }
+  ]
+}

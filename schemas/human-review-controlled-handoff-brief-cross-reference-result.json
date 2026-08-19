@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/human-review-controlled-handoff-brief-cross-reference-result.json",
+  "title": "Human Review Controlled Handoff Brief Cross-Reference Result Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "valid",
+    "contractKind",
+    "version",
+    "errors"
+  ],
+  "properties": {
+    "valid": {
+      "type": "boolean"
+    },
+    "contractKind": {
+      "type": "string",
+      "const": "HUMAN_REVIEW_CONTROLLED_HANDOFF_BRIEF_CROSS_REFERENCE_BOUNDARY"
+    },
+    "version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "errors": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "code": {
+                "const": "invalid_input_shape"
+              },
+              "path": {
+                "const": "$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "human_review_controlled_handoff_brief_invalid"
+              },
+              "path": {
+                "const": "$.controlled_handoff_brief"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "source_register_invalid"
+              },
+              "path": {
+                "const": "$.component_bindings.source_register.candidate"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "review_chronology_invalid"
+              },
+              "path": {
+                "const": "$.component_bindings.review_chronology.candidate"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "asserted_claim_matrix_invalid"
+              },
+              "path": {
+                "const": "$.component_bindings.asserted_claim_matrix.candidate"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "declared_packet_review_gaps_invalid"
+              },
+              "path": {
+                "const": "$.component_bindings.declared_packet_review_gaps.candidate"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "human_review_questions_invalid"
+              },
+              "path": {
+                "const": "$.component_bindings.human_review_questions.candidate"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "human_review_no_conclusion_notice_invalid"
+              },
+              "path": {
+                "const": "$.component_bindings.no_conclusion_notice.candidate"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "packet_ref_mismatch"
+              },
+              "path": {
+                "enum": [
+                  "$.component_bindings.source_register.candidate.packet_ref",
+                  "$.component_bindings.review_chronology.candidate.packet_ref",
+                  "$.component_bindings.asserted_claim_matrix.candidate.packet_ref",
+                  "$.component_bindings.declared_packet_review_gaps.candidate.packet_ref",
+                  "$.component_bindings.human_review_questions.candidate.packet_ref",
+                  "$.component_bindings.no_conclusion_notice.candidate.packet_ref"
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "component_ref_mismatch"
+              },
+              "path": {
+                "enum": [
+                  "$.component_bindings.source_register.component_ref",
+                  "$.component_bindings.review_chronology.component_ref",
+                  "$.component_bindings.asserted_claim_matrix.component_ref",
+                  "$.component_bindings.declared_packet_review_gaps.component_ref",
+                  "$.component_bindings.human_review_questions.component_ref",
+                  "$.component_bindings.no_conclusion_notice.component_ref"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "valid": {
+          "const": true
+        },
+        "errors": {
+          "maxItems": 0
+        }
+      }
+    },
+    {
+      "properties": {
+        "valid": {
+          "const": false
+        },
+        "errors": {
+          "minItems": 1
+        }
+      }
+    }
+  ]
+}

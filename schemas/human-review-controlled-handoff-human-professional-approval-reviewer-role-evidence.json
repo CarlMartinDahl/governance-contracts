@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/human-review-controlled-handoff-human-professional-approval-reviewer-role-evidence.json",
+  "title": "Human Review Controlled Handoff Human/Professional Approval Reviewer Role Evidence Contract Scaffold",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_id",
+    "contract_version",
+    "reviewer_role_evidence_ref",
+    "approval_ref",
+    "review_session_ref",
+    "reviewer_ref",
+    "reviewer_role",
+    "actor_role_binding_evidence_ref",
+    "role_permission_policy_evidence_ref",
+    "binding_issuer_ref",
+    "binding_provenance_ref",
+    "binding_lifecycle_posture",
+    "verification_posture",
+    "human_professional_review_required"
+  ],
+  "properties": {
+    "contract_id": {
+      "type": "string",
+      "const": "human_review.controlled_handoff_human_professional_approval_reviewer_role_evidence"
+    },
+    "contract_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "reviewer_role_evidence_ref": {
+      "type": "string",
+      "pattern": "^rre_[a-z0-9][a-z0-9_-]{0,59}$"
+    },
+    "approval_ref": {
+      "type": "string",
+      "pattern": "^apr_[a-z0-9][a-z0-9_-]{0,59}$"
+    },
+    "review_session_ref": {
+      "type": "string",
+      "pattern": "^rvs_[a-z0-9][a-z0-9_-]{0,59}$"
+    },
+    "reviewer_ref": {
+      "type": "string",
+      "pattern": "^rvr_[a-z0-9][a-z0-9_-]{0,59}$"
+    },
+    "reviewer_role": {
+      "type": "string",
+      "enum": [
+        "HUMAN_REVIEWER",
+        "PROFESSIONAL_REVIEWER"
+      ]
+    },
+    "actor_role_binding_evidence_ref": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:-]{1,128}$",
+      "not": {
+        "anyOf": [
+          {
+            "enum": [
+              ".",
+              ".."
+            ]
+          },
+          {
+            "pattern": "^[Hh][Tt][Tt][Pp]:"
+          },
+          {
+            "pattern": "^[Hh][Tt][Tt][Pp][Ss]:"
+          },
+          {
+            "pattern": "^[Ff][Tt][Pp]:"
+          },
+          {
+            "pattern": "^[Ff][Ii][Ll][Ee]:"
+          },
+          {
+            "pattern": "^[Mm][Aa][Ii][Ll][Tt][Oo]:"
+          },
+          {
+            "pattern": "^[Dd][Aa][Tt][Aa]:"
+          },
+          {
+            "pattern": "^[Jj][Aa][Vv][Aa][Ss][Cc][Rr][Ii][Pp][Tt]:"
+          }
+        ]
+      }
+    },
+    "role_permission_policy_evidence_ref": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:-]{1,128}$",
+      "not": {
+        "anyOf": [
+          {
+            "enum": [
+              ".",
+              ".."
+            ]
+          },
+          {
+            "pattern": "^[Hh][Tt][Tt][Pp]:"
+          },
+          {
+            "pattern": "^[Hh][Tt][Tt][Pp][Ss]:"
+          },
+          {
+            "pattern": "^[Ff][Tt][Pp]:"
+          },
+          {
+            "pattern": "^[Ff][Ii][Ll][Ee]:"
+          },
+          {
+            "pattern": "^[Mm][Aa][Ii][Ll][Tt][Oo]:"
+          },
+          {
+            "pattern": "^[Dd][Aa][Tt][Aa]:"
+          },
+          {
+            "pattern": "^[Jj][Aa][Vv][Aa][Ss][Cc][Rr][Ii][Pp][Tt]:"
+          }
+        ]
+      }
+    },
+    "binding_issuer_ref": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:-]{1,128}$",
+      "not": {
+        "anyOf": [
+          {
+            "enum": [
+              ".",
+              ".."
+            ]
+          },
+          {
+            "pattern": "^[Hh][Tt][Tt][Pp]:"
+          },
+          {
+            "pattern": "^[Hh][Tt][Tt][Pp][Ss]:"
+          },
+          {
+            "pattern": "^[Ff][Tt][Pp]:"
+          },
+          {
+            "pattern": "^[Ff][Ii][Ll][Ee]:"
+          },
+          {
+            "pattern": "^[Mm][Aa][Ii][Ll][Tt][Oo]:"
+          },
+          {
+            "pattern": "^[Dd][Aa][Tt][Aa]:"
+          },
+          {
+            "pattern": "^[Jj][Aa][Vv][Aa][Ss][Cc][Rr][Ii][Pp][Tt]:"
+          }
+        ]
+      }
+    },
+    "binding_provenance_ref": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:-]{1,128}$",
+      "not": {
+        "anyOf": [
+          {
+            "enum": [
+              ".",
+              ".."
+            ]
+          },
+          {
+            "pattern": "^[Hh][Tt][Tt][Pp]:"
+          },
+          {
+            "pattern": "^[Hh][Tt][Tt][Pp][Ss]:"
+          },
+          {
+            "pattern": "^[Ff][Tt][Pp]:"
+          },
+          {
+            "pattern": "^[Ff][Ii][Ll][Ee]:"
+          },
+          {
+            "pattern": "^[Mm][Aa][Ii][Ll][Tt][Oo]:"
+          },
+          {
+            "pattern": "^[Dd][Aa][Tt][Aa]:"
+          },
+          {
+            "pattern": "^[Jj][Aa][Vv][Aa][Ss][Cc][Rr][Ii][Pp][Tt]:"
+          }
+        ]
+      }
+    },
+    "binding_lifecycle_posture": {
+      "type": "string",
+      "enum": [
+        "REVIEWER_ROLE_BINDING_DECLARED_ACTIVE",
+        "REVIEWER_ROLE_BINDING_DECLARED_INACTIVE",
+        "REVIEWER_ROLE_BINDING_DECLARED_REVOKED"
+      ]
+    },
+    "verification_posture": {
+      "type": "string",
+      "const": "NOT_VERIFIED_BY_CONTRACT"
+    },
+    "human_professional_review_required": {
+      "type": "boolean",
+      "const": true
+    }
+  }
+}

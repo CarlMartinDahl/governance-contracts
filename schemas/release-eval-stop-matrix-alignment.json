@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/release-eval-stop-matrix-alignment.json",
+  "title": "Release Eval Stop Matrix Alignment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "SWE_BODELNING",
+    "CMD_PROFILE"
+  ],
+  "properties": {
+    "SWE_BODELNING": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "release_gate",
+        "release_eval_freshness",
+        "release_gate_reason_code",
+        "stop_matrix_entry"
+      ],
+      "properties": {
+        "release_gate": {
+          "type": "string",
+          "const": "blocked"
+        },
+        "release_eval_freshness": {
+          "type": "string",
+          "const": "current"
+        },
+        "release_gate_reason_code": {
+          "type": "string",
+          "const": "swe-bodelning-input-incomplete"
+        },
+        "stop_matrix_entry": {
+          "allOf": [
+            {
+              "$ref": "./stop-matrix-model.json#/$defs/stopMatrixEntry"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "condition_key",
+                "canonical_stop_outcomes"
+              ],
+              "properties": {
+                "condition_key": {
+                  "type": "string",
+                  "const": "missing_required_input"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "CMD_PROFILE": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "release_gate",
+        "release_eval_freshness",
+        "release_gate_reason_code",
+        "stop_matrix_entry"
+      ],
+      "properties": {
+        "release_gate": {
+          "type": "string",
+          "const": "blocked"
+        },
+        "release_eval_freshness": {
+          "type": "string",
+          "const": "current"
+        },
+        "release_gate_reason_code": {
+          "type": "string",
+          "const": "cmd-input-incomplete"
+        },
+        "stop_matrix_entry": {
+          "allOf": [
+            {
+              "$ref": "./stop-matrix-model.json#/$defs/stopMatrixEntry"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "condition_key",
+                "canonical_stop_outcomes"
+              ],
+              "properties": {
+                "condition_key": {
+                  "type": "string",
+                  "const": "missing_required_input"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

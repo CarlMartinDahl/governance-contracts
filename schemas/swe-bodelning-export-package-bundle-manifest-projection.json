@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/swe-bodelning-export-package-bundle-manifest-projection.json",
+  "title": "SWE_BODELNING Export Bundle Manifest Projection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "jurisdiction_profile_key",
+    "package_version",
+    "export_version",
+    "dossier_fingerprint",
+    "canonical_source",
+    "generated_at",
+    "artifacts",
+    "snapshot_status"
+  ],
+  "properties": {
+    "jurisdiction_profile_key": {
+      "type": "string",
+      "const": "SWE_BODELNING"
+    },
+    "package_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "export_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dossier_fingerprint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "canonical_source": {
+      "$ref": "https://governance-contracts.invalid/schemas/swe-bodelning-profile-dossier-snapshot.json#/$defs/canonicalSource"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "https://governance-contracts.invalid/schemas/swe-bodelning-export-package-bundle-manifest.json#/$defs/bundleManifestArtifact"
+      }
+    },
+    "snapshot_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "snapshot_package_version_found",
+        "current_package_version",
+        "snapshot_is_current"
+      ],
+      "properties": {
+        "source": {
+          "type": "string",
+          "enum": [
+            "persisted-current",
+            "persisted-stale"
+          ]
+        },
+        "snapshot_package_version_found": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "current_package_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "snapshot_is_current": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

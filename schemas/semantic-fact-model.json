@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/semantic-fact-model.json",
+  "title": "Semantic Fact Model Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "presence_status",
+    "source_status",
+    "verification_status",
+    "dispute_status",
+    "consistency_status"
+  ],
+  "properties": {
+    "presence_status": {
+      "type": "string",
+      "enum": [
+        "present",
+        "missing"
+      ]
+    },
+    "source_status": {
+      "type": "string",
+      "enum": [
+        "sourced",
+        "unsourced"
+      ]
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "verified",
+        "unverified"
+      ]
+    },
+    "dispute_status": {
+      "type": "string",
+      "enum": [
+        "disputed",
+        "undisputed"
+      ]
+    },
+    "consistency_status": {
+      "type": "string",
+      "enum": [
+        "consistent",
+        "inconsistent",
+        "ambiguous"
+      ]
+    }
+  }
+}

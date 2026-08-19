@@ -1,0 +1,510 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/swe-bodelning-profile-dossier-snapshot.json",
+  "title": "SWE_BODELNING Profile Dossier Snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "jurisdiction_profile_key",
+    "projection_version",
+    "dossier_fingerprint",
+    "canonical_source",
+    "release_gate",
+    "release_gate_reason_code",
+    "release_eval_freshness",
+    "release_eval_freshness_reason_code",
+    "evaluator_version",
+    "profile_input_summary",
+    "profile_input_lane_snapshot",
+    "evidence_reference_index",
+    "evidence_exhibit_index",
+    "issue_index",
+    "section_index"
+  ],
+  "properties": {
+    "jurisdiction_profile_key": {
+      "type": "string",
+      "const": "SWE_BODELNING"
+    },
+    "projection_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dossier_fingerprint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "canonical_source": {
+      "$ref": "#/$defs/canonicalSource"
+    },
+    "release_gate": {
+      "type": "string",
+      "minLength": 1
+    },
+    "release_gate_reason_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "release_eval_freshness": {
+      "type": "string",
+      "minLength": 1
+    },
+    "release_eval_freshness_reason_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evaluator_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profile_input_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required_lane_count",
+        "lanes_with_value_count",
+        "missing_value_lane_keys",
+        "lanes_with_support_count",
+        "missing_support_lane_keys"
+      ],
+      "properties": {
+        "required_lane_count": {
+          "type": "integer",
+          "const": 3
+        },
+        "lanes_with_value_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "missing_value_lane_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "economic_contribution",
+              "shared_use",
+              "shared_intent"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "lanes_with_support_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "missing_support_lane_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "economic_contribution",
+              "shared_use",
+              "shared_intent"
+            ]
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "profile_input_lane_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "economic_contribution",
+        "shared_use",
+        "shared_intent"
+      ],
+      "properties": {
+        "economic_contribution": {
+          "$ref": "#/$defs/dossierLaneSnapshotEntry"
+        },
+        "shared_use": {
+          "$ref": "#/$defs/dossierLaneSnapshotEntry"
+        },
+        "shared_intent": {
+          "$ref": "#/$defs/dossierLaneSnapshotEntry"
+        }
+      }
+    },
+    "evidence_reference_index": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceReferenceIndexEntry"
+      }
+    },
+    "evidence_exhibit_index": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceExhibitIndexEntry"
+      }
+    },
+    "issue_index": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/issueIndexEntry"
+      }
+    },
+    "section_index": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sectionIndexEntry"
+      }
+    }
+  },
+  "$defs": {
+    "canonicalSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "release_eval_run_id",
+        "evaluator_version",
+        "jurisdiction_profile_key",
+        "persisted_at"
+      ],
+      "properties": {
+        "release_eval_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evaluator_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "jurisdiction_profile_key": {
+          "type": "string",
+          "const": "SWE_BODELNING"
+        },
+        "persisted_at": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "issueIndexEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issue_ref",
+        "issue_code",
+        "blocking",
+        "related_lane_keys",
+        "related_reference_refs",
+        "related_section_refs",
+        "related_exhibit_refs"
+      ],
+      "properties": {
+        "issue_ref": {
+          "type": "string",
+          "pattern": "^ISS-[0-9]{3}$"
+        },
+        "issue_code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "blocking": {
+          "type": "boolean"
+        },
+        "related_lane_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "economic_contribution",
+              "shared_use",
+              "shared_intent"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "related_reference_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^REF-[0-9]{3}$"
+          },
+          "uniqueItems": true
+        },
+        "related_section_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^SEC-[0-9]{3}$"
+          },
+          "uniqueItems": true
+        },
+        "related_exhibit_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^EX-[0-9]{3}$"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "evidenceReferenceIndexEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reference_ref",
+        "evidence_object_id",
+        "supporting_lane_keys",
+        "related_issue_refs",
+        "related_section_refs",
+        "related_exhibit_refs"
+      ],
+      "properties": {
+        "reference_ref": {
+          "type": "string",
+          "pattern": "^REF-[0-9]{3}$"
+        },
+        "evidence_object_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "supporting_lane_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "economic_contribution",
+              "shared_use",
+              "shared_intent"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "related_issue_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^ISS-[0-9]{3}$"
+          },
+          "uniqueItems": true
+        },
+        "related_section_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^SEC-[0-9]{3}$"
+          },
+          "uniqueItems": true
+        },
+        "related_exhibit_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^EX-[0-9]{3}$"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "evidenceExhibitIndexEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exhibit_ref",
+        "evidence_object_id",
+        "supporting_lane_keys",
+        "related_lane_keys",
+        "related_reference_refs",
+        "related_issue_refs",
+        "related_section_refs"
+      ],
+      "properties": {
+        "exhibit_ref": {
+          "type": "string",
+          "pattern": "^EX-[0-9]{3}$"
+        },
+        "evidence_object_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "supporting_lane_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "economic_contribution",
+              "shared_use",
+              "shared_intent"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "related_lane_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "economic_contribution",
+              "shared_use",
+              "shared_intent"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "related_reference_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^REF-[0-9]{3}$"
+          },
+          "uniqueItems": true
+        },
+        "related_issue_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^ISS-[0-9]{3}$"
+          },
+          "uniqueItems": true
+        },
+        "related_section_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^SEC-[0-9]{3}$"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "sectionIndexEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "section_ref",
+        "section_key",
+        "section_order",
+        "present",
+        "related_issue_refs",
+        "related_lane_keys",
+        "related_reference_refs",
+        "related_exhibit_refs"
+      ],
+      "properties": {
+        "section_ref": {
+          "type": "string",
+          "pattern": "^SEC-[0-9]{3}$"
+        },
+        "section_key": {
+          "type": "string",
+          "enum": [
+            "release_status",
+            "profile_inputs",
+            "issues"
+          ]
+        },
+        "section_order": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "present": {
+          "type": "boolean"
+        },
+        "related_issue_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^ISS-[0-9]{3}$"
+          },
+          "uniqueItems": true
+        },
+        "related_lane_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "economic_contribution",
+              "shared_use",
+              "shared_intent"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "related_reference_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^REF-[0-9]{3}$"
+          },
+          "uniqueItems": true
+        },
+        "related_exhibit_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^EX-[0-9]{3}$"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "dossierLaneSnapshotEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "has_value",
+        "value",
+        "has_support",
+        "supporting_reference_refs",
+        "supporting_exhibit_refs",
+        "related_issue_refs",
+        "related_section_refs"
+      ],
+      "properties": {
+        "has_value": {
+          "type": "boolean"
+        },
+        "value": {},
+        "evidence_object_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "has_support": {
+          "type": "boolean"
+        },
+        "supporting_reference_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^REF-[0-9]{3}$"
+          },
+          "uniqueItems": true
+        },
+        "supporting_exhibit_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^EX-[0-9]{3}$"
+          },
+          "uniqueItems": true
+        },
+        "related_issue_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^ISS-[0-9]{3}$"
+          },
+          "uniqueItems": true
+        },
+        "related_section_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^SEC-[0-9]{3}$"
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

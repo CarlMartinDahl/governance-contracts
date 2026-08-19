@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/swe-bodelning-profile-dossier-projection.json",
+  "title": "SWE_BODELNING Profile Dossier Projection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "jurisdiction_profile_key",
+    "projection_version",
+    "dossier_fingerprint",
+    "canonical_source",
+    "release_gate",
+    "release_gate_reason_code",
+    "release_eval_freshness",
+    "release_eval_freshness_reason_code",
+    "evaluator_version",
+    "profile_input_summary",
+    "profile_input_lane_snapshot",
+    "snapshot_status",
+    "evidence_reference_index",
+    "evidence_exhibit_index",
+    "issue_index",
+    "section_index"
+  ],
+  "properties": {
+    "jurisdiction_profile_key": {
+      "type": "string",
+      "const": "SWE_BODELNING"
+    },
+    "projection_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dossier_fingerprint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "canonical_source": {
+      "$ref": "https://governance-contracts.invalid/schemas/swe-bodelning-profile-dossier-snapshot.json#/$defs/canonicalSource"
+    },
+    "release_gate": {
+      "type": "string",
+      "minLength": 1
+    },
+    "release_gate_reason_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "release_eval_freshness": {
+      "type": "string",
+      "minLength": 1
+    },
+    "release_eval_freshness_reason_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evaluator_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profile_input_summary": {
+      "$ref": "https://governance-contracts.invalid/schemas/swe-bodelning-profile-dossier-snapshot.json#/properties/profile_input_summary"
+    },
+    "profile_input_lane_snapshot": {
+      "$ref": "https://governance-contracts.invalid/schemas/swe-bodelning-profile-dossier-snapshot.json#/properties/profile_input_lane_snapshot"
+    },
+    "snapshot_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "snapshot_projection_version_found",
+        "current_projection_version",
+        "snapshot_is_current"
+      ],
+      "properties": {
+        "source": {
+          "type": "string",
+          "enum": [
+            "persisted-current",
+            "fallback-reprojection"
+          ]
+        },
+        "snapshot_projection_version_found": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "current_projection_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "snapshot_is_current": {
+          "type": "boolean"
+        }
+      }
+    },
+    "evidence_reference_index": {
+      "type": "array",
+      "items": {
+        "$ref": "https://governance-contracts.invalid/schemas/swe-bodelning-profile-dossier-snapshot.json#/$defs/evidenceReferenceIndexEntry"
+      }
+    },
+    "evidence_exhibit_index": {
+      "type": "array",
+      "items": {
+        "$ref": "https://governance-contracts.invalid/schemas/swe-bodelning-profile-dossier-snapshot.json#/$defs/evidenceExhibitIndexEntry"
+      }
+    },
+    "issue_index": {
+      "type": "array",
+      "items": {
+        "$ref": "https://governance-contracts.invalid/schemas/swe-bodelning-profile-dossier-snapshot.json#/$defs/issueIndexEntry"
+      }
+    },
+    "section_index": {
+      "type": "array",
+      "items": {
+        "$ref": "https://governance-contracts.invalid/schemas/swe-bodelning-profile-dossier-snapshot.json#/$defs/sectionIndexEntry"
+      }
+    }
+  }
+}

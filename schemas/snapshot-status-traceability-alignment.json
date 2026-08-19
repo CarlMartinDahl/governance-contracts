@@ -1,0 +1,411 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/snapshot-status-traceability-alignment.json",
+  "title": "Shared Snapshot Status Traceability Alignment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "alignment_scope",
+    "supported_snapshot_status_sources",
+    "unaligned_snapshot_status_sources",
+    "CURRENT_SHARED_SNAPSHOT_STATUS",
+    "STALE_SHARED_SNAPSHOT_STATUS"
+  ],
+  "properties": {
+    "alignment_scope": {
+      "type": "string",
+      "const": "shared_persisted_current_and_stale_traceability_safe_cases_only"
+    },
+    "supported_snapshot_status_sources": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "persisted-current",
+          "persisted-stale"
+        ]
+      },
+      "uniqueItems": true,
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "unaligned_snapshot_status_sources": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "fallback-reprojection"
+        ]
+      },
+      "uniqueItems": true,
+      "minItems": 1,
+      "maxItems": 1
+    },
+    "CURRENT_SHARED_SNAPSHOT_STATUS": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "snapshot_status_source",
+        "snapshot_is_current",
+        "persisted_snapshot_references",
+        "current_source_references",
+        "projection_references",
+        "traceability"
+      ],
+      "properties": {
+        "snapshot_status_source": {
+          "type": "string",
+          "const": "persisted-current"
+        },
+        "snapshot_is_current": {
+          "type": "boolean",
+          "const": true
+        },
+        "persisted_snapshot_references": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "schemas/swe-bodelning-profile-dossier-snapshot.json",
+              "schemas/cmd-profile-dossier-snapshot.json",
+              "schemas/swe-bodelning-export-package.json",
+              "schemas/cmd-export-package.json",
+              "schemas/swe-bodelning-export-package-json-artifact.json",
+              "schemas/cmd-export-package-json-artifact.json",
+              "schemas/swe-bodelning-export-package-markdown-artifact.json",
+              "schemas/cmd-export-package-markdown-artifact.json",
+              "schemas/swe-bodelning-export-package-pdf-artifact.json",
+              "schemas/cmd-export-package-pdf-artifact.json",
+              "schemas/swe-bodelning-export-package-docx-artifact.json",
+              "schemas/cmd-export-package-docx-artifact.json",
+              "schemas/swe-bodelning-export-package-bundle-manifest.json",
+              "schemas/cmd-export-package-bundle-manifest.json",
+              "schemas/swe-bodelning-export-package-bundle-archive-artifact.json",
+              "schemas/cmd-export-package-bundle-archive-artifact.json"
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 16,
+          "maxItems": 16
+        },
+        "current_source_references": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-profile-dossier-current-source",
+              "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-export-package-current-source",
+              "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-json-artifact-current-source",
+              "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-markdown-artifact-current-source",
+              "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-pdf-artifact-current-source",
+              "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-docx-artifact-current-source",
+              "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-bundle-manifest-current-source",
+              "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-bundle-archive-current-source"
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 8,
+          "maxItems": 8
+        },
+        "projection_references": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "schemas/swe-bodelning-profile-dossier-projection.json",
+              "schemas/cmd-profile-dossier-projection.json",
+              "schemas/swe-bodelning-export-package-projection.json",
+              "schemas/cmd-export-package-projection.json",
+              "schemas/swe-bodelning-export-package-json-artifact-projection.json",
+              "schemas/cmd-export-package-json-artifact-projection.json",
+              "schemas/swe-bodelning-export-package-markdown-artifact-projection.json",
+              "schemas/cmd-export-package-markdown-artifact-projection.json",
+              "schemas/swe-bodelning-export-package-pdf-artifact-projection.json",
+              "schemas/cmd-export-package-pdf-artifact-projection.json",
+              "schemas/swe-bodelning-export-package-docx-artifact-projection.json",
+              "schemas/cmd-export-package-docx-artifact-projection.json",
+              "schemas/swe-bodelning-export-package-bundle-manifest-projection.json",
+              "schemas/cmd-export-package-bundle-manifest-projection.json",
+              "schemas/swe-bodelning-export-package-bundle-archive-artifact-projection.json",
+              "schemas/cmd-export-package-bundle-archive-artifact-projection.json"
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 16,
+          "maxItems": 16
+        },
+        "traceability": {
+          "allOf": [
+            {
+              "$ref": "./traceability-model.json"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "input_references",
+                "documented_rule_references",
+                "canonical_output_references"
+              ],
+              "properties": {
+                "input_references": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "schemas/swe-bodelning-profile-dossier-snapshot.json",
+                      "schemas/cmd-profile-dossier-snapshot.json",
+                      "schemas/swe-bodelning-export-package.json",
+                      "schemas/cmd-export-package.json",
+                      "schemas/swe-bodelning-export-package-json-artifact.json",
+                      "schemas/cmd-export-package-json-artifact.json",
+                      "schemas/swe-bodelning-export-package-markdown-artifact.json",
+                      "schemas/cmd-export-package-markdown-artifact.json",
+                      "schemas/swe-bodelning-export-package-pdf-artifact.json",
+                      "schemas/cmd-export-package-pdf-artifact.json",
+                      "schemas/swe-bodelning-export-package-docx-artifact.json",
+                      "schemas/cmd-export-package-docx-artifact.json",
+                      "schemas/swe-bodelning-export-package-bundle-manifest.json",
+                      "schemas/cmd-export-package-bundle-manifest.json",
+                      "schemas/swe-bodelning-export-package-bundle-archive-artifact.json",
+                      "schemas/cmd-export-package-bundle-archive-artifact.json",
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-profile-dossier-current-source",
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-export-package-current-source",
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-json-artifact-current-source",
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-markdown-artifact-current-source",
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-pdf-artifact-current-source",
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-docx-artifact-current-source",
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-bundle-manifest-current-source",
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-bundle-archive-current-source"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 24,
+                  "maxItems": 24
+                },
+                "documented_rule_references": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::shared-snapshot-status-current-traceability",
+                      "docs/MODEL_INFORMATION_PRINCIPLES_v1.md::traceability-principle"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "canonical_output_references": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "schemas/swe-bodelning-profile-dossier-projection.json",
+                      "schemas/cmd-profile-dossier-projection.json",
+                      "schemas/swe-bodelning-export-package-projection.json",
+                      "schemas/cmd-export-package-projection.json",
+                      "schemas/swe-bodelning-export-package-json-artifact-projection.json",
+                      "schemas/cmd-export-package-json-artifact-projection.json",
+                      "schemas/swe-bodelning-export-package-markdown-artifact-projection.json",
+                      "schemas/cmd-export-package-markdown-artifact-projection.json",
+                      "schemas/swe-bodelning-export-package-pdf-artifact-projection.json",
+                      "schemas/cmd-export-package-pdf-artifact-projection.json",
+                      "schemas/swe-bodelning-export-package-docx-artifact-projection.json",
+                      "schemas/cmd-export-package-docx-artifact-projection.json",
+                      "schemas/swe-bodelning-export-package-bundle-manifest-projection.json",
+                      "schemas/cmd-export-package-bundle-manifest-projection.json",
+                      "schemas/swe-bodelning-export-package-bundle-archive-artifact-projection.json",
+                      "schemas/cmd-export-package-bundle-archive-artifact-projection.json"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 16,
+                  "maxItems": 16
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "STALE_SHARED_SNAPSHOT_STATUS": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "snapshot_status_source",
+        "snapshot_is_current",
+        "persisted_snapshot_references",
+        "current_source_references",
+        "projection_references",
+        "traceability"
+      ],
+      "properties": {
+        "snapshot_status_source": {
+          "type": "string",
+          "const": "persisted-stale"
+        },
+        "snapshot_is_current": {
+          "type": "boolean",
+          "const": false
+        },
+        "persisted_snapshot_references": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "schemas/swe-bodelning-export-package.json",
+              "schemas/cmd-export-package.json",
+              "schemas/swe-bodelning-export-package-json-artifact.json",
+              "schemas/cmd-export-package-json-artifact.json",
+              "schemas/swe-bodelning-export-package-markdown-artifact.json",
+              "schemas/cmd-export-package-markdown-artifact.json",
+              "schemas/swe-bodelning-export-package-pdf-artifact.json",
+              "schemas/cmd-export-package-pdf-artifact.json",
+              "schemas/swe-bodelning-export-package-docx-artifact.json",
+              "schemas/cmd-export-package-docx-artifact.json",
+              "schemas/swe-bodelning-export-package-bundle-manifest.json",
+              "schemas/cmd-export-package-bundle-manifest.json",
+              "schemas/swe-bodelning-export-package-bundle-archive-artifact.json",
+              "schemas/cmd-export-package-bundle-archive-artifact.json"
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 14,
+          "maxItems": 14
+        },
+        "current_source_references": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-export-package-current-source",
+              "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-json-artifact-current-source",
+              "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-markdown-artifact-current-source",
+              "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-pdf-artifact-current-source",
+              "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-docx-artifact-current-source",
+              "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-bundle-manifest-current-source",
+              "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-bundle-archive-current-source"
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 7,
+          "maxItems": 7
+        },
+        "projection_references": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "schemas/swe-bodelning-export-package-projection.json",
+              "schemas/cmd-export-package-projection.json",
+              "schemas/swe-bodelning-export-package-json-artifact-projection.json",
+              "schemas/cmd-export-package-json-artifact-projection.json",
+              "schemas/swe-bodelning-export-package-markdown-artifact-projection.json",
+              "schemas/cmd-export-package-markdown-artifact-projection.json",
+              "schemas/swe-bodelning-export-package-pdf-artifact-projection.json",
+              "schemas/cmd-export-package-pdf-artifact-projection.json",
+              "schemas/swe-bodelning-export-package-docx-artifact-projection.json",
+              "schemas/cmd-export-package-docx-artifact-projection.json",
+              "schemas/swe-bodelning-export-package-bundle-manifest-projection.json",
+              "schemas/cmd-export-package-bundle-manifest-projection.json",
+              "schemas/swe-bodelning-export-package-bundle-archive-artifact-projection.json",
+              "schemas/cmd-export-package-bundle-archive-artifact-projection.json"
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 14,
+          "maxItems": 14
+        },
+        "traceability": {
+          "allOf": [
+            {
+              "$ref": "./traceability-model.json"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "input_references",
+                "documented_rule_references",
+                "canonical_output_references"
+              ],
+              "properties": {
+                "input_references": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "schemas/swe-bodelning-export-package.json",
+                      "schemas/cmd-export-package.json",
+                      "schemas/swe-bodelning-export-package-json-artifact.json",
+                      "schemas/cmd-export-package-json-artifact.json",
+                      "schemas/swe-bodelning-export-package-markdown-artifact.json",
+                      "schemas/cmd-export-package-markdown-artifact.json",
+                      "schemas/swe-bodelning-export-package-pdf-artifact.json",
+                      "schemas/cmd-export-package-pdf-artifact.json",
+                      "schemas/swe-bodelning-export-package-docx-artifact.json",
+                      "schemas/cmd-export-package-docx-artifact.json",
+                      "schemas/swe-bodelning-export-package-bundle-manifest.json",
+                      "schemas/cmd-export-package-bundle-manifest.json",
+                      "schemas/swe-bodelning-export-package-bundle-archive-artifact.json",
+                      "schemas/cmd-export-package-bundle-archive-artifact.json",
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-export-package-current-source",
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-json-artifact-current-source",
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-markdown-artifact-current-source",
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-pdf-artifact-current-source",
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-docx-artifact-current-source",
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-bundle-manifest-current-source",
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::snapshot-status-bundle-archive-current-source"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 21,
+                  "maxItems": 21
+                },
+                "documented_rule_references": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::shared-snapshot-status-stale-traceability",
+                      "docs/MODEL_INFORMATION_PRINCIPLES_v1.md::traceability-principle"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "canonical_output_references": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "schemas/swe-bodelning-export-package-projection.json",
+                      "schemas/cmd-export-package-projection.json",
+                      "schemas/swe-bodelning-export-package-json-artifact-projection.json",
+                      "schemas/cmd-export-package-json-artifact-projection.json",
+                      "schemas/swe-bodelning-export-package-markdown-artifact-projection.json",
+                      "schemas/cmd-export-package-markdown-artifact-projection.json",
+                      "schemas/swe-bodelning-export-package-pdf-artifact-projection.json",
+                      "schemas/cmd-export-package-pdf-artifact-projection.json",
+                      "schemas/swe-bodelning-export-package-docx-artifact-projection.json",
+                      "schemas/cmd-export-package-docx-artifact-projection.json",
+                      "schemas/swe-bodelning-export-package-bundle-manifest-projection.json",
+                      "schemas/cmd-export-package-bundle-manifest-projection.json",
+                      "schemas/swe-bodelning-export-package-bundle-archive-artifact-projection.json",
+                      "schemas/cmd-export-package-bundle-archive-artifact-projection.json"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 14,
+                  "maxItems": 14
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

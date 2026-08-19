@@ -1,0 +1,408 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/profile-dossier-traceability-alignment.json",
+  "title": "Profile Dossier Traceability Alignment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "SWE_BODELNING_INPUT_INCOMPLETE",
+    "SWE_BODELNING_SUPPORT_INCOMPLETE",
+    "CMD_PROFILE_INPUT_INCOMPLETE",
+    "CMD_PROFILE_PRIMARY_SIGNAL_PRESENT_RUNTIME_NOT_IMPLEMENTED"
+  ],
+  "properties": {
+    "SWE_BODELNING_INPUT_INCOMPLETE": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "jurisdiction_profile_key",
+        "release_gate",
+        "release_eval_freshness",
+        "release_gate_reason_code",
+        "traceability"
+      ],
+      "properties": {
+        "jurisdiction_profile_key": {
+          "type": "string",
+          "const": "SWE_BODELNING"
+        },
+        "release_gate": {
+          "type": "string",
+          "const": "blocked"
+        },
+        "release_eval_freshness": {
+          "type": "string",
+          "const": "current"
+        },
+        "release_gate_reason_code": {
+          "type": "string",
+          "const": "swe-bodelning-input-incomplete"
+        },
+        "traceability": {
+          "allOf": [
+            {
+              "$ref": "./traceability-model.json"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "input_references",
+                "documented_rule_references",
+                "canonical_output_references",
+                "change_causes"
+              ],
+              "properties": {
+                "input_references": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "profile_input_summary.missing_value_lane_keys"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 1
+                },
+                "documented_rule_references": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::swe-bodelning-input-incomplete",
+                      "docs/MODEL_INFORMATION_PRINCIPLES_v1.md::traceability-principle"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "canonical_output_references": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "schemas/swe-bodelning-profile-dossier-snapshot.json",
+                      "schemas/swe-bodelning-profile-dossier-projection.json"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "change_causes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "changed_input"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "SWE_BODELNING_SUPPORT_INCOMPLETE": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "jurisdiction_profile_key",
+        "release_gate",
+        "release_eval_freshness",
+        "release_gate_reason_code",
+        "traceability"
+      ],
+      "properties": {
+        "jurisdiction_profile_key": {
+          "type": "string",
+          "const": "SWE_BODELNING"
+        },
+        "release_gate": {
+          "type": "string",
+          "const": "blocked"
+        },
+        "release_eval_freshness": {
+          "type": "string",
+          "const": "current"
+        },
+        "release_gate_reason_code": {
+          "type": "string",
+          "const": "swe-bodelning-support-incomplete"
+        },
+        "traceability": {
+          "allOf": [
+            {
+              "$ref": "./traceability-model.json"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "input_references",
+                "documented_rule_references",
+                "canonical_output_references",
+                "change_causes"
+              ],
+              "properties": {
+                "input_references": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "profile_input_summary.missing_support_lane_keys"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 1
+                },
+                "documented_rule_references": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::swe-bodelning-support-incomplete",
+                      "docs/MODEL_INFORMATION_PRINCIPLES_v1.md::traceability-principle"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "canonical_output_references": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "schemas/swe-bodelning-profile-dossier-snapshot.json",
+                      "schemas/swe-bodelning-profile-dossier-projection.json"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "change_causes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "changed_support"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "CMD_PROFILE_INPUT_INCOMPLETE": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "jurisdiction_profile_key",
+        "release_gate",
+        "release_eval_freshness",
+        "release_gate_reason_code",
+        "traceability"
+      ],
+      "properties": {
+        "jurisdiction_profile_key": {
+          "type": "string",
+          "const": "CMD_PROFILE"
+        },
+        "release_gate": {
+          "type": "string",
+          "const": "blocked"
+        },
+        "release_eval_freshness": {
+          "type": "string",
+          "const": "current"
+        },
+        "release_gate_reason_code": {
+          "type": "string",
+          "const": "cmd-input-incomplete"
+        },
+        "traceability": {
+          "allOf": [
+            {
+              "$ref": "./traceability-model.json"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "input_references",
+                "documented_rule_references",
+                "canonical_output_references",
+                "change_causes"
+              ],
+              "properties": {
+                "input_references": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "profile_input_summary.missing_value_lane_keys"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 1
+                },
+                "documented_rule_references": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::cmd-input-incomplete",
+                      "docs/MODEL_INFORMATION_PRINCIPLES_v1.md::traceability-principle"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "canonical_output_references": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "schemas/cmd-profile-dossier-snapshot.json",
+                      "schemas/cmd-profile-dossier-projection.json"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "change_causes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "changed_input"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "CMD_PROFILE_PRIMARY_SIGNAL_PRESENT_RUNTIME_NOT_IMPLEMENTED": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "jurisdiction_profile_key",
+        "release_gate",
+        "release_eval_freshness",
+        "release_gate_reason_code",
+        "traceability"
+      ],
+      "properties": {
+        "jurisdiction_profile_key": {
+          "type": "string",
+          "const": "CMD_PROFILE"
+        },
+        "release_gate": {
+          "type": "string",
+          "const": "blocked"
+        },
+        "release_eval_freshness": {
+          "type": "string",
+          "const": "current"
+        },
+        "release_gate_reason_code": {
+          "type": "string",
+          "const": "cmd-runtime-not-implemented"
+        },
+        "traceability": {
+          "allOf": [
+            {
+              "$ref": "./traceability-model.json"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "input_references",
+                "documented_rule_references",
+                "canonical_output_references",
+                "change_causes"
+              ],
+              "properties": {
+                "input_references": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "profile_input_lane_snapshot.cmd_primary_signal.value"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 1
+                },
+                "documented_rule_references": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "docs/API_CONTRACTS_GOVERNANCE_v1.md::cmd-primary-signal-present-but-runtime-not-implemented",
+                      "docs/MODEL_INFORMATION_PRINCIPLES_v1.md::traceability-principle"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "canonical_output_references": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "schemas/cmd-profile-dossier-snapshot.json",
+                      "schemas/cmd-profile-dossier-projection.json"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "change_causes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "changed_input",
+                      "changed_rule"
+                    ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

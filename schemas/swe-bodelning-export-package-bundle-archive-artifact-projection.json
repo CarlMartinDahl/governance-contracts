@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/swe-bodelning-export-package-bundle-archive-artifact-projection.json",
+  "title": "SWE_BODELNING Final Export Bundle Archive Artifact Projection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "artifact_type",
+    "filename",
+    "content_type",
+    "encoding",
+    "body_base64",
+    "package_version",
+    "bundle_manifest_fingerprint",
+    "snapshot_status"
+  ],
+  "properties": {
+    "artifact_type": {
+      "type": "string",
+      "const": "export-package-bundle-archive"
+    },
+    "filename": {
+      "type": "string",
+      "minLength": 1
+    },
+    "content_type": {
+      "type": "string",
+      "const": "application/zip"
+    },
+    "encoding": {
+      "type": "string",
+      "const": "base64"
+    },
+    "body_base64": {
+      "type": "string",
+      "minLength": 1
+    },
+    "package_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "bundle_manifest_fingerprint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "snapshot_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "snapshot_package_version_found",
+        "current_package_version",
+        "snapshot_is_current"
+      ],
+      "properties": {
+        "source": {
+          "type": "string",
+          "enum": [
+            "persisted-current",
+            "persisted-stale"
+          ]
+        },
+        "snapshot_package_version_found": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "current_package_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "snapshot_is_current": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

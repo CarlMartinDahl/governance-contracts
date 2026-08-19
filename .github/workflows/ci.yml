@@ -1,0 +1,48 @@
+name: CI Evidence Hardening
+
+# CI evidence is not release approval, runtime certification, technical sign-off,
+# external-use authorization, or product-candidate selection.
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  evidence:
+    name: CI evidence, not release readiness
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js with npm cache
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install from lockfile without lifecycle scripts
+        run: npm ci --ignore-scripts
+
+      - name: Dependency auditability check
+        run: npm audit --omit=dev
+
+      - name: Scan public release boundary
+        run: npm run release:scan
+
+      - name: Run tests
+        run: npm test
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run build
+        run: npm run build

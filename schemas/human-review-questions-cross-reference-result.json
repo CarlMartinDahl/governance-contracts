@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/human-review-questions-cross-reference-result.json",
+  "title": "Human Review Questions Cross-Reference Result Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "valid",
+    "contractKind",
+    "version",
+    "errors"
+  ],
+  "properties": {
+    "valid": {
+      "type": "boolean"
+    },
+    "contractKind": {
+      "type": "string",
+      "const": "HUMAN_REVIEW_QUESTIONS_CROSS_REFERENCE_BOUNDARY"
+    },
+    "version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "errors": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "code": {
+                "const": "invalid_input_shape"
+              },
+              "path": {
+                "const": "$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "human_review_questions_invalid"
+              },
+              "path": {
+                "const": "$.human_review_questions"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "source_register_invalid"
+              },
+              "path": {
+                "const": "$.source_register"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "review_chronology_invalid"
+              },
+              "path": {
+                "const": "$.review_chronology"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "asserted_claim_matrix_invalid"
+              },
+              "path": {
+                "const": "$.asserted_claim_matrix"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "declared_packet_review_gaps_invalid"
+              },
+              "path": {
+                "const": "$.declared_packet_review_gaps"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "packet_ref_mismatch"
+              },
+              "path": {
+                "enum": [
+                  "$.source_register.packet_ref",
+                  "$.review_chronology.packet_ref",
+                  "$.asserted_claim_matrix.packet_ref",
+                  "$.declared_packet_review_gaps.packet_ref"
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "source_ref_not_in_register"
+              },
+              "path": {
+                "pattern": "^\\$\\.human_review_questions\\.questions\\[(0|[1-9][0-9]*)\\]\\.source_refs\\[(0|[1-9][0-9]*)\\]$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "chronology_entry_ref_not_in_chronology"
+              },
+              "path": {
+                "pattern": "^\\$\\.human_review_questions\\.questions\\[(0|[1-9][0-9]*)\\]\\.chronology_entry_refs\\[(0|[1-9][0-9]*)\\]$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "claim_ref_not_in_asserted_claim_matrix"
+              },
+              "path": {
+                "pattern": "^\\$\\.human_review_questions\\.questions\\[(0|[1-9][0-9]*)\\]\\.claim_refs\\[(0|[1-9][0-9]*)\\]$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "gap_ref_not_in_declared_packet_review_gaps"
+              },
+              "path": {
+                "pattern": "^\\$\\.human_review_questions\\.questions\\[(0|[1-9][0-9]*)\\]\\.gap_refs\\[(0|[1-9][0-9]*)\\]$"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "valid": {
+          "const": true
+        },
+        "errors": {
+          "maxItems": 0
+        }
+      }
+    },
+    {
+      "properties": {
+        "valid": {
+          "const": false
+        },
+        "errors": {
+          "minItems": 1
+        }
+      }
+    }
+  ]
+}

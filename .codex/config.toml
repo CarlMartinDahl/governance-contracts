@@ -1,0 +1,5 @@
+# Force Codex to treat the current working directory as the project root.
+# This repo sits inside a parent directory that can otherwise be mistaken
+# for the active workspace root.
+
+project_root_markers = []

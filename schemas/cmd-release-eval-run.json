@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/cmd-release-eval-run.json",
+  "title": "CMD_PROFILE Release Eval Run",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "jurisdiction_profile_key",
+    "release_eval_run_id",
+    "evaluator_version",
+    "release_gate",
+    "release_gate_reason_code",
+    "release_eval_freshness",
+    "release_eval_freshness_reason_code",
+    "profile_input_summary",
+    "profile_input_lane_snapshot"
+  ],
+  "properties": {
+    "jurisdiction_profile_key": {
+      "type": "string",
+      "const": "CMD_PROFILE"
+    },
+    "release_eval_run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evaluator_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "release_gate": {
+      "type": "string",
+      "minLength": 1
+    },
+    "release_gate_reason_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "release_eval_freshness": {
+      "type": "string",
+      "minLength": 1
+    },
+    "release_eval_freshness_reason_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profile_input_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required_lane_count",
+        "lanes_with_value_count",
+        "missing_value_lane_keys",
+        "lanes_with_support_count",
+        "missing_support_lane_keys"
+      ],
+      "properties": {
+        "required_lane_count": {
+          "type": "integer",
+          "const": 1
+        },
+        "lanes_with_value_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "missing_value_lane_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "cmd_primary_signal"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "lanes_with_support_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "missing_support_lane_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "cmd_primary_signal"
+            ]
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "profile_input_lane_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cmd_primary_signal"
+      ],
+      "properties": {
+        "cmd_primary_signal": {
+          "$ref": "#/$defs/releaseEvalLaneSnapshotEntry"
+        }
+      }
+    },
+    "profile_dossier_snapshot": {
+      "$ref": "https://governance-contracts.invalid/schemas/cmd-profile-dossier-snapshot.json"
+    }
+  },
+  "$defs": {
+    "releaseEvalLaneSnapshotEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "has_value",
+        "value",
+        "has_support"
+      ],
+      "properties": {
+        "has_value": {
+          "type": "boolean"
+        },
+        "value": {},
+        "evidence_object_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "has_support": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

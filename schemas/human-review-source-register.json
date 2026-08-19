@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/human-review-source-register.json",
+  "title": "Human Review Source Register Contract Scaffold",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_id",
+    "contract_version",
+    "packet_ref",
+    "sources"
+  ],
+  "properties": {
+    "contract_id": {
+      "type": "string",
+      "const": "human_review.source_register"
+    },
+    "contract_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "packet_ref": {
+      "type": "string",
+      "pattern": "^pkt_[a-z0-9][a-z0-9_-]{0,59}$"
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "$ref": "#/$defs/sourceEntry"
+      }
+    }
+  },
+  "$defs": {
+    "sourceEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_ref",
+        "declared_source_type",
+        "declared_label"
+      ],
+      "properties": {
+        "source_ref": {
+          "type": "string",
+          "pattern": "^src_[a-z0-9][a-z0-9_-]{0,59}$"
+        },
+        "declared_source_type": {
+          "type": "string",
+          "enum": [
+            "message_thread",
+            "email",
+            "document",
+            "image",
+            "audio",
+            "video",
+            "other_declared"
+          ]
+        },
+        "declared_label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/cmd-profile-dossier-projection.json",
+  "title": "CMD_PROFILE Profile Dossier Projection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "jurisdiction_profile_key",
+    "release_gate",
+    "release_gate_reason_code",
+    "release_eval_freshness",
+    "release_eval_freshness_reason_code",
+    "evaluator_version",
+    "profile_input_summary",
+    "profile_input_lane_snapshot",
+    "snapshot_status"
+  ],
+  "properties": {
+    "jurisdiction_profile_key": {
+      "type": "string",
+      "const": "CMD_PROFILE"
+    },
+    "release_gate": {
+      "$ref": "https://governance-contracts.invalid/schemas/cmd-profile-dossier-snapshot.json#/properties/release_gate"
+    },
+    "release_gate_reason_code": {
+      "$ref": "https://governance-contracts.invalid/schemas/cmd-profile-dossier-snapshot.json#/properties/release_gate_reason_code"
+    },
+    "release_eval_freshness": {
+      "$ref": "https://governance-contracts.invalid/schemas/cmd-profile-dossier-snapshot.json#/properties/release_eval_freshness"
+    },
+    "release_eval_freshness_reason_code": {
+      "$ref": "https://governance-contracts.invalid/schemas/cmd-profile-dossier-snapshot.json#/properties/release_eval_freshness_reason_code"
+    },
+    "evaluator_version": {
+      "$ref": "https://governance-contracts.invalid/schemas/cmd-profile-dossier-snapshot.json#/properties/evaluator_version"
+    },
+    "profile_input_summary": {
+      "$ref": "https://governance-contracts.invalid/schemas/cmd-profile-dossier-snapshot.json#/properties/profile_input_summary"
+    },
+    "profile_input_lane_snapshot": {
+      "$ref": "https://governance-contracts.invalid/schemas/cmd-profile-dossier-snapshot.json#/properties/profile_input_lane_snapshot"
+    },
+    "snapshot_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "snapshot_projection_version_found",
+        "current_projection_version",
+        "snapshot_is_current"
+      ],
+      "properties": {
+        "source": {
+          "type": "string",
+          "enum": [
+            "persisted-current",
+            "fallback-reprojection"
+          ]
+        },
+        "snapshot_projection_version_found": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "current_projection_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "snapshot_is_current": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

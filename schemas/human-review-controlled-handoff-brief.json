@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/human-review-controlled-handoff-brief.json",
+  "title": "Human Review Controlled Handoff Brief Contract Scaffold",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_id",
+    "contract_version",
+    "packet_ref",
+    "handoff_posture",
+    "component_refs"
+  ],
+  "properties": {
+    "contract_id": {
+      "type": "string",
+      "const": "human_review.controlled_handoff_brief"
+    },
+    "contract_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "packet_ref": {
+      "type": "string",
+      "pattern": "^pkt_[a-z0-9][a-z0-9_-]{0,59}$"
+    },
+    "handoff_posture": {
+      "type": "string",
+      "const": "HANDOFF_CANDIDATE_ONLY"
+    },
+    "component_refs": {
+      "$ref": "#/$defs/componentRefs"
+    }
+  },
+  "$defs": {
+    "componentRefs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_register_ref",
+        "review_chronology_ref",
+        "asserted_claim_matrix_ref",
+        "declared_packet_review_gaps_ref",
+        "human_review_questions_ref",
+        "no_conclusion_notice_ref"
+      ],
+      "properties": {
+        "source_register_ref": {
+          "type": "string",
+          "pattern": "^hro_[a-z0-9][a-z0-9_-]{0,59}$"
+        },
+        "review_chronology_ref": {
+          "type": "string",
+          "pattern": "^hro_[a-z0-9][a-z0-9_-]{0,59}$"
+        },
+        "asserted_claim_matrix_ref": {
+          "type": "string",
+          "pattern": "^hro_[a-z0-9][a-z0-9_-]{0,59}$"
+        },
+        "declared_packet_review_gaps_ref": {
+          "type": "string",
+          "pattern": "^hro_[a-z0-9][a-z0-9_-]{0,59}$"
+        },
+        "human_review_questions_ref": {
+          "type": "string",
+          "pattern": "^hro_[a-z0-9][a-z0-9_-]{0,59}$"
+        },
+        "no_conclusion_notice_ref": {
+          "type": "string",
+          "pattern": "^hro_[a-z0-9][a-z0-9_-]{0,59}$"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,344 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/release-eval-semantic-fact-alignment.json",
+  "title": "Release Eval Semantic Fact Alignment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "alignment_scope",
+    "supported_semantic_fact_dimensions",
+    "unassigned_semantic_fact_dimensions",
+    "SWE_BODELNING_INPUT_INCOMPLETE",
+    "SWE_BODELNING_SUPPORT_INCOMPLETE",
+    "CMD_PROFILE_INPUT_INCOMPLETE",
+    "CMD_PROFILE_PRIMARY_SIGNAL_PRESENT_RUNTIME_NOT_IMPLEMENTED"
+  ],
+  "properties": {
+    "alignment_scope": {
+      "type": "string",
+      "const": "presence_status_and_source_status_safe_cases_only"
+    },
+    "supported_semantic_fact_dimensions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "presence_status",
+          "source_status"
+        ]
+      },
+      "uniqueItems": true,
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "unassigned_semantic_fact_dimensions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "verification_status",
+          "dispute_status",
+          "consistency_status"
+        ]
+      },
+      "uniqueItems": true,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "SWE_BODELNING_INPUT_INCOMPLETE": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/semanticFactAlignmentEntry"
+        },
+        {
+          "properties": {
+            "jurisdiction_profile_key": {
+              "const": "SWE_BODELNING"
+            },
+            "case_key": {
+              "const": "input_incomplete"
+            },
+            "release_gate": {
+              "const": "blocked"
+            },
+            "release_eval_freshness": {
+              "const": "current"
+            },
+            "release_gate_reason_code": {
+              "const": "swe-bodelning-input-incomplete"
+            },
+            "input_contract_references": {
+              "items": {
+                "enum": [
+                  "profile_input_summary.required_lane_count",
+                  "profile_input_summary.lanes_with_value_count",
+                  "profile_input_summary.missing_value_lane_keys",
+                  "profile_input_lane_snapshot.*.has_value"
+                ]
+              },
+              "minItems": 4,
+              "maxItems": 4
+            },
+            "canonical_semantic_fact": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/presenceOnlySemanticFact"
+                },
+                {
+                  "properties": {
+                    "presence_status": {
+                      "const": "missing"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "SWE_BODELNING_SUPPORT_INCOMPLETE": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/semanticFactAlignmentEntry"
+        },
+        {
+          "properties": {
+            "jurisdiction_profile_key": {
+              "const": "SWE_BODELNING"
+            },
+            "case_key": {
+              "const": "support_incomplete"
+            },
+            "release_gate": {
+              "const": "blocked"
+            },
+            "release_eval_freshness": {
+              "const": "current"
+            },
+            "release_gate_reason_code": {
+              "const": "swe-bodelning-support-incomplete"
+            },
+            "input_contract_references": {
+              "items": {
+                "enum": [
+                  "profile_input_summary.required_lane_count",
+                  "profile_input_summary.lanes_with_value_count",
+                  "profile_input_summary.missing_value_lane_keys",
+                  "profile_input_summary.lanes_with_support_count",
+                  "profile_input_summary.missing_support_lane_keys",
+                  "profile_input_lane_snapshot.*.has_value",
+                  "profile_input_lane_snapshot.*.has_support",
+                  "profile_input_lane_snapshot.*.evidence_object_ids"
+                ]
+              },
+              "minItems": 8,
+              "maxItems": 8
+            },
+            "canonical_semantic_fact": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/presenceAndSourceSemanticFact"
+                },
+                {
+                  "properties": {
+                    "presence_status": {
+                      "const": "present"
+                    },
+                    "source_status": {
+                      "const": "unsourced"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "CMD_PROFILE_INPUT_INCOMPLETE": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/semanticFactAlignmentEntry"
+        },
+        {
+          "properties": {
+            "jurisdiction_profile_key": {
+              "const": "CMD_PROFILE"
+            },
+            "case_key": {
+              "const": "input_incomplete"
+            },
+            "release_gate": {
+              "const": "blocked"
+            },
+            "release_eval_freshness": {
+              "const": "current"
+            },
+            "release_gate_reason_code": {
+              "const": "cmd-input-incomplete"
+            },
+            "input_contract_references": {
+              "items": {
+                "enum": [
+                  "profile_input_summary.required_lane_count",
+                  "profile_input_summary.lanes_with_value_count",
+                  "profile_input_summary.missing_value_lane_keys",
+                  "profile_input_lane_snapshot.*.has_value"
+                ]
+              },
+              "minItems": 4,
+              "maxItems": 4
+            },
+            "canonical_semantic_fact": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/presenceOnlySemanticFact"
+                },
+                {
+                  "properties": {
+                    "presence_status": {
+                      "const": "missing"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "CMD_PROFILE_PRIMARY_SIGNAL_PRESENT_RUNTIME_NOT_IMPLEMENTED": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/semanticFactAlignmentEntry"
+        },
+        {
+          "properties": {
+            "jurisdiction_profile_key": {
+              "const": "CMD_PROFILE"
+            },
+            "case_key": {
+              "const": "primary_signal_present_runtime_not_implemented"
+            },
+            "release_gate": {
+              "const": "blocked"
+            },
+            "release_eval_freshness": {
+              "const": "current"
+            },
+            "release_gate_reason_code": {
+              "const": "cmd-runtime-not-implemented"
+            },
+            "input_contract_references": {
+              "items": {
+                "enum": [
+                  "profile_input_summary.required_lane_count",
+                  "profile_input_summary.lanes_with_value_count",
+                  "profile_input_summary.missing_value_lane_keys",
+                  "profile_input_lane_snapshot.*.has_value"
+                ]
+              },
+              "minItems": 4,
+              "maxItems": 4
+            },
+            "canonical_semantic_fact": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/presenceOnlySemanticFact"
+                },
+                {
+                  "properties": {
+                    "presence_status": {
+                      "const": "present"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "semanticFactAlignmentEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "jurisdiction_profile_key",
+        "case_key",
+        "release_gate",
+        "release_eval_freshness",
+        "release_gate_reason_code",
+        "input_contract_references",
+        "canonical_semantic_fact"
+      ],
+      "properties": {
+        "jurisdiction_profile_key": {
+          "type": "string",
+          "enum": [
+            "SWE_BODELNING",
+            "CMD_PROFILE"
+          ]
+        },
+        "case_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "release_gate": {
+          "type": "string",
+          "minLength": 1
+        },
+        "release_eval_freshness": {
+          "type": "string",
+          "minLength": 1
+        },
+        "release_gate_reason_code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "input_contract_references": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "canonical_semantic_fact": {
+          "type": "object"
+        }
+      }
+    },
+    "presenceOnlySemanticFact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "presence_status"
+      ],
+      "properties": {
+        "presence_status": {
+          "$ref": "./semantic-fact-model.json#/properties/presence_status"
+        }
+      }
+    },
+    "presenceAndSourceSemanticFact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "presence_status",
+        "source_status"
+      ],
+      "properties": {
+        "presence_status": {
+          "$ref": "./semantic-fact-model.json#/properties/presence_status"
+        },
+        "source_status": {
+          "$ref": "./semantic-fact-model.json#/properties/source_status"
+        }
+      }
+    }
+  }
+}

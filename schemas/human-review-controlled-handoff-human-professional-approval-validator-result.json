@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/human-review-controlled-handoff-human-professional-approval-validator-result.json",
+  "title": "Human Review Controlled Handoff Human/Professional Approval Validator Result Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "valid",
+    "contractKind",
+    "version",
+    "errors"
+  ],
+  "properties": {
+    "valid": {
+      "type": "boolean"
+    },
+    "contractKind": {
+      "type": "string",
+      "const": "HUMAN_REVIEW_CONTROLLED_HANDOFF_HUMAN_PROFESSIONAL_APPROVAL_VALIDATOR_BOUNDARY"
+    },
+    "version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "errors": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "code": {
+                "const": "required_field_missing"
+              },
+              "path": {
+                "enum": [
+                  "$.contract_id",
+                  "$.contract_version",
+                  "$.approval_ref",
+                  "$.packet_ref",
+                  "$.controlled_handoff_brief_ref",
+                  "$.controlled_handoff_brief_fingerprint",
+                  "$.approval_posture",
+                  "$.decision",
+                  "$.reviewer_attribution",
+                  "$.decision_support",
+                  "$.decided_at",
+                  "$.review_session_ref",
+                  "$.decision_attestation_ref",
+                  "$.reviewer_attribution.reviewer_ref",
+                  "$.reviewer_attribution.reviewer_role",
+                  "$.reviewer_attribution.reviewer_authority_evidence_ref",
+                  "$.decision_support.decision_basis_refs",
+                  "$.decision_support.prior_approval_refs",
+                  "$.decision_support.correction_request_refs"
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "unexpected_field"
+              },
+              "path": {
+                "enum": [
+                  "$",
+                  "$.reviewer_attribution",
+                  "$.decision_support"
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "invalid_field_type"
+              },
+              "path": {
+                "oneOf": [
+                  {
+                    "enum": [
+                      "$",
+                      "$.contract_id",
+                      "$.contract_version",
+                      "$.approval_ref",
+                      "$.packet_ref",
+                      "$.controlled_handoff_brief_ref",
+                      "$.controlled_handoff_brief_fingerprint",
+                      "$.approval_posture",
+                      "$.decision",
+                      "$.reviewer_attribution",
+                      "$.decision_support",
+                      "$.decided_at",
+                      "$.review_session_ref",
+                      "$.decision_attestation_ref",
+                      "$.reviewer_attribution.reviewer_ref",
+                      "$.reviewer_attribution.reviewer_role",
+                      "$.reviewer_attribution.reviewer_authority_evidence_ref",
+                      "$.decision_support.decision_basis_refs",
+                      "$.decision_support.prior_approval_refs",
+                      "$.decision_support.correction_request_refs"
+                    ]
+                  },
+                  {
+                    "pattern": "^\\$\\.decision_support\\.decision_basis_refs\\[(?:0|[1-9][0-9]*)\\]$"
+                  },
+                  {
+                    "pattern": "^\\$\\.decision_support\\.prior_approval_refs\\[(?:0|[1-9][0-9]*)\\]$"
+                  },
+                  {
+                    "pattern": "^\\$\\.decision_support\\.correction_request_refs\\[(?:0|[1-9][0-9]*)\\]$"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "invalid_field_value"
+              },
+              "path": {
+                "oneOf": [
+                  {
+                    "enum": [
+                      "$.contract_id",
+                      "$.contract_version",
+                      "$.approval_ref",
+                      "$.packet_ref",
+                      "$.controlled_handoff_brief_ref",
+                      "$.controlled_handoff_brief_fingerprint",
+                      "$.approval_posture",
+                      "$.decision",
+                      "$.decided_at",
+                      "$.review_session_ref",
+                      "$.decision_attestation_ref",
+                      "$.reviewer_attribution.reviewer_ref",
+                      "$.reviewer_attribution.reviewer_role",
+                      "$.reviewer_attribution.reviewer_authority_evidence_ref",
+                      "$.decision_support.decision_basis_refs",
+                      "$.decision_support.prior_approval_refs"
+                    ]
+                  },
+                  {
+                    "pattern": "^\\$\\.decision_support\\.decision_basis_refs\\[(?:0|[1-9][0-9]*)\\]$"
+                  },
+                  {
+                    "pattern": "^\\$\\.decision_support\\.prior_approval_refs\\[(?:0|[1-9][0-9]*)\\]$"
+                  },
+                  {
+                    "pattern": "^\\$\\.decision_support\\.correction_request_refs\\[(?:0|[1-9][0-9]*)\\]$"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "invalid_cross_field_combination"
+              },
+              "path": {
+                "const": "$.decision_support.correction_request_refs"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "duplicate_reference"
+              },
+              "path": {
+                "oneOf": [
+                  {
+                    "pattern": "^\\$\\.decision_support\\.decision_basis_refs\\[(?:0|[1-9][0-9]*)\\]$"
+                  },
+                  {
+                    "pattern": "^\\$\\.decision_support\\.prior_approval_refs\\[(?:0|[1-9][0-9]*)\\]$"
+                  },
+                  {
+                    "pattern": "^\\$\\.decision_support\\.correction_request_refs\\[(?:0|[1-9][0-9]*)\\]$"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "valid": {
+          "const": true
+        },
+        "errors": {
+          "maxItems": 0
+        }
+      }
+    },
+    {
+      "properties": {
+        "valid": {
+          "const": false
+        },
+        "errors": {
+          "minItems": 1
+        }
+      }
+    }
+  ]
+}

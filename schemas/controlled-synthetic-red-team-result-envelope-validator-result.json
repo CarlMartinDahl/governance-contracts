@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/controlled-synthetic-red-team-result-envelope-validator-result.json",
+  "title": "Controlled Synthetic Red-Team Result Envelope Validator Result Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "valid",
+    "contractKind",
+    "version",
+    "errors"
+  ],
+  "properties": {
+    "valid": {
+      "type": "boolean"
+    },
+    "contractKind": {
+      "type": "string",
+      "const": "CONTROLLED_SYNTHETIC_RED_TEAM_RESULT_ENVELOPE_VALIDATOR_BOUNDARY"
+    },
+    "version": {
+      "type": "string",
+      "const": "v1"
+    },
+    "errors": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "code": {
+                "const": "INVALID_TYPE"
+              },
+              "path": {
+                "enum": [
+                  "$",
+                  "$.contractVersion",
+                  "$.contractKind",
+                  "$.caseId",
+                  "$.outputType",
+                  "$.actionClass",
+                  "$.escalationTarget",
+                  "$.safeNextAction",
+                  "$.syntheticCorpusPosture",
+                  "$.realEvidencePosture"
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "MISSING_FIELD"
+              },
+              "path": {
+                "enum": [
+                  "$.contractVersion",
+                  "$.contractKind",
+                  "$.caseId",
+                  "$.outputType",
+                  "$.actionClass",
+                  "$.escalationTarget",
+                  "$.safeNextAction",
+                  "$.syntheticCorpusPosture",
+                  "$.realEvidencePosture",
+                  "$.humanProfessionalReviewRequired"
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "UNKNOWN_FIELD"
+              },
+              "path": {
+                "const": "$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "INVALID_ENUM"
+              },
+              "path": {
+                "enum": [
+                  "$.contractVersion",
+                  "$.contractKind",
+                  "$.caseId",
+                  "$.outputType",
+                  "$.actionClass",
+                  "$.escalationTarget",
+                  "$.safeNextAction",
+                  "$.syntheticCorpusPosture",
+                  "$.realEvidencePosture"
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "INVALID_BOOLEAN"
+              },
+              "path": {
+                "const": "$.humanProfessionalReviewRequired"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "valid": {
+          "const": true
+        },
+        "errors": {
+          "maxItems": 0
+        }
+      }
+    },
+    {
+      "properties": {
+        "valid": {
+          "const": false
+        },
+        "errors": {
+          "minItems": 1
+        }
+      }
+    }
+  ]
+}

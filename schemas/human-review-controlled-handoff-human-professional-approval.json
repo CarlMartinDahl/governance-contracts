@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/human-review-controlled-handoff-human-professional-approval.json",
+  "title": "Human Review Controlled Handoff Human/Professional Approval Contract Scaffold",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_id",
+    "contract_version",
+    "approval_ref",
+    "packet_ref",
+    "controlled_handoff_brief_ref",
+    "controlled_handoff_brief_fingerprint",
+    "approval_posture",
+    "decision",
+    "reviewer_attribution",
+    "decision_support",
+    "decided_at",
+    "review_session_ref",
+    "decision_attestation_ref"
+  ],
+  "properties": {
+    "contract_id": {
+      "type": "string",
+      "const": "human_review.controlled_handoff_human_professional_approval"
+    },
+    "contract_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "approval_ref": {
+      "type": "string",
+      "pattern": "^apr_[a-z0-9][a-z0-9_-]{0,59}$"
+    },
+    "packet_ref": {
+      "type": "string",
+      "pattern": "^pkt_[a-z0-9][a-z0-9_-]{0,59}$"
+    },
+    "controlled_handoff_brief_ref": {
+      "type": "string",
+      "pattern": "^hro_[a-z0-9][a-z0-9_-]{0,59}$"
+    },
+    "controlled_handoff_brief_fingerprint": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "approval_posture": {
+      "type": "string",
+      "const": "APPROVAL_DECISION_CANDIDATE_ONLY"
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "HUMAN_PROFESSIONAL_GATE_APPROVED",
+        "HUMAN_PROFESSIONAL_GATE_CORRECTION_REQUIRED",
+        "HUMAN_PROFESSIONAL_GATE_REJECTED"
+      ]
+    },
+    "reviewer_attribution": {
+      "$ref": "#/$defs/reviewerAttribution"
+    },
+    "decision_support": {
+      "$ref": "#/$defs/decisionSupport"
+    },
+    "decided_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]\\.[0-9]{3}Z$"
+    },
+    "review_session_ref": {
+      "type": "string",
+      "pattern": "^rvs_[a-z0-9][a-z0-9_-]{0,59}$"
+    },
+    "decision_attestation_ref": {
+      "type": "string",
+      "pattern": "^att_[a-z0-9][a-z0-9_-]{0,59}$"
+    }
+  },
+  "$defs": {
+    "reviewerAttribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reviewer_ref",
+        "reviewer_role",
+        "reviewer_authority_evidence_ref"
+      ],
+      "properties": {
+        "reviewer_ref": {
+          "type": "string",
+          "pattern": "^rvr_[a-z0-9][a-z0-9_-]{0,59}$"
+        },
+        "reviewer_role": {
+          "type": "string",
+          "enum": [
+            "HUMAN_REVIEWER",
+            "PROFESSIONAL_REVIEWER"
+          ]
+        },
+        "reviewer_authority_evidence_ref": {
+          "type": "string",
+          "pattern": "^rae_[a-z0-9][a-z0-9_-]{0,59}$"
+        }
+      }
+    },
+    "decisionSupport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decision_basis_refs",
+        "prior_approval_refs",
+        "correction_request_refs"
+      ],
+      "properties": {
+        "decision_basis_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^rvb_[a-z0-9][a-z0-9_-]{0,59}$"
+          }
+        },
+        "prior_approval_refs": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^apr_[a-z0-9][a-z0-9_-]{0,59}$"
+          }
+        },
+        "correction_request_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^cor_[a-z0-9][a-z0-9_-]{0,59}$"
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "decision"
+        ],
+        "properties": {
+          "decision": {
+            "const": "HUMAN_PROFESSIONAL_GATE_CORRECTION_REQUIRED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "decision_support": {
+            "properties": {
+              "correction_request_refs": {
+                "minItems": 1,
+                "maxItems": 1
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "decision_support": {
+            "properties": {
+              "correction_request_refs": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

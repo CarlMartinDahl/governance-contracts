@@ -1,0 +1,13 @@
+{
+  "name": "governance-contracts",
+  "private": true,
+  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "description": "Fail-closed governance contracts and testable foundations for human review workflows.",
+  "scripts": {
+    "test": "node --test",
+    "lint": "node scripts/lint.mjs",
+    "build": "node scripts/build.mjs",
+    "release:scan": "node scripts/public-release-scan.mjs"
+  }
+}

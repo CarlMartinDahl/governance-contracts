@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/export-package-bundle-manifest-stop-matrix-alignment.json",
+  "title": "Export Package Bundle Manifest Stop Matrix Alignment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "SWE_BODELNING",
+    "CMD_PROFILE"
+  ],
+  "properties": {
+    "SWE_BODELNING": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_export_package_profile_dossier_release_gate",
+        "source_export_package_profile_dossier_release_eval_freshness",
+        "source_export_package_profile_dossier_release_gate_reason_code",
+        "stop_matrix_entry"
+      ],
+      "properties": {
+        "source_export_package_profile_dossier_release_gate": {
+          "type": "string",
+          "const": "blocked"
+        },
+        "source_export_package_profile_dossier_release_eval_freshness": {
+          "type": "string",
+          "const": "current"
+        },
+        "source_export_package_profile_dossier_release_gate_reason_code": {
+          "type": "string",
+          "const": "swe-bodelning-input-incomplete"
+        },
+        "stop_matrix_entry": {
+          "allOf": [
+            {
+              "$ref": "./stop-matrix-model.json#/$defs/stopMatrixEntry"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "condition_key",
+                "canonical_stop_outcomes"
+              ],
+              "properties": {
+                "condition_key": {
+                  "type": "string",
+                  "const": "missing_required_input"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "CMD_PROFILE": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_export_package_profile_dossier_release_gate",
+        "source_export_package_profile_dossier_release_eval_freshness",
+        "source_export_package_profile_dossier_release_gate_reason_code",
+        "stop_matrix_entry"
+      ],
+      "properties": {
+        "source_export_package_profile_dossier_release_gate": {
+          "type": "string",
+          "const": "blocked"
+        },
+        "source_export_package_profile_dossier_release_eval_freshness": {
+          "type": "string",
+          "const": "current"
+        },
+        "source_export_package_profile_dossier_release_gate_reason_code": {
+          "type": "string",
+          "const": "cmd-input-incomplete"
+        },
+        "stop_matrix_entry": {
+          "allOf": [
+            {
+              "$ref": "./stop-matrix-model.json#/$defs/stopMatrixEntry"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "condition_key",
+                "canonical_stop_outcomes"
+              ],
+              "properties": {
+                "condition_key": {
+                  "type": "string",
+                  "const": "missing_required_input"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

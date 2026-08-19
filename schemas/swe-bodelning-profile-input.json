@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/swe-bodelning-profile-input.json",
+  "title": "SWE_BODELNING Profile Input Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "jurisdiction_profile_key",
+    "profile_input_summary",
+    "profile_input_lane_snapshot"
+  ],
+  "properties": {
+    "jurisdiction_profile_key": {
+      "type": "string",
+      "const": "SWE_BODELNING"
+    },
+    "profile_input_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required_lane_count",
+        "lanes_with_value_count",
+        "missing_value_lane_keys"
+      ],
+      "properties": {
+        "required_lane_count": {
+          "type": "integer",
+          "const": 3
+        },
+        "lanes_with_value_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "missing_value_lane_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "economic_contribution",
+              "shared_use",
+              "shared_intent"
+            ]
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "profile_input_lane_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "economic_contribution",
+        "shared_use",
+        "shared_intent"
+      ],
+      "properties": {
+        "economic_contribution": {
+          "$ref": "#/$defs/laneSnapshotEntry"
+        },
+        "shared_use": {
+          "$ref": "#/$defs/laneSnapshotEntry"
+        },
+        "shared_intent": {
+          "$ref": "#/$defs/laneSnapshotEntry"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "laneSnapshotEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "has_value",
+        "value"
+      ],
+      "properties": {
+        "has_value": {
+          "type": "boolean"
+        },
+        "value": {},
+        "evidence_object_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

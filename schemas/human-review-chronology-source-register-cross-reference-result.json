@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/human-review-chronology-source-register-cross-reference-result.json",
+  "title": "Human Review Chronology Source Register Cross-Reference Result Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "valid",
+    "contractKind",
+    "version",
+    "errors"
+  ],
+  "properties": {
+    "valid": {
+      "type": "boolean"
+    },
+    "contractKind": {
+      "type": "string",
+      "const": "HUMAN_REVIEW_CHRONOLOGY_SOURCE_REGISTER_CROSS_REFERENCE_BOUNDARY"
+    },
+    "version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "errors": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "code": {
+                "const": "invalid_input_shape"
+              },
+              "path": {
+                "const": "$"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "review_chronology_invalid"
+              },
+              "path": {
+                "const": "$.review_chronology"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "source_register_invalid"
+              },
+              "path": {
+                "const": "$.source_register"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "packet_ref_mismatch"
+              },
+              "path": {
+                "const": "$.review_chronology.packet_ref"
+              }
+            }
+          },
+          {
+            "properties": {
+              "code": {
+                "const": "source_ref_not_in_register"
+              },
+              "path": {
+                "pattern": "^\\$\\.review_chronology\\.entries\\[(0|[1-9][0-9]*)\\]\\.source_refs\\[(0|[1-9][0-9]*)\\]$"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "valid": {
+          "const": true
+        },
+        "errors": {
+          "maxItems": 0
+        }
+      }
+    },
+    {
+      "properties": {
+        "valid": {
+          "const": false
+        },
+        "errors": {
+          "minItems": 1
+        }
+      }
+    }
+  ]
+}

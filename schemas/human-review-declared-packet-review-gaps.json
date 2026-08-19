@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://governance-contracts.invalid/schemas/human-review-declared-packet-review-gaps.json",
+  "title": "Human Review Declared Packet Review Gaps Contract Scaffold",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_id",
+    "contract_version",
+    "packet_ref",
+    "gaps"
+  ],
+  "properties": {
+    "contract_id": {
+      "type": "string",
+      "const": "human_review.declared_packet_review_gaps"
+    },
+    "contract_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "packet_ref": {
+      "type": "string",
+      "pattern": "^pkt_[a-z0-9][a-z0-9_-]{0,59}$"
+    },
+    "gaps": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "$ref": "#/$defs/gapRow"
+      }
+    }
+  },
+  "$defs": {
+    "gapRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gap_ref",
+        "declaration_origin",
+        "declared_gap_text",
+        "source_refs",
+        "chronology_entry_refs",
+        "claim_refs"
+      ],
+      "properties": {
+        "gap_ref": {
+          "type": "string",
+          "pattern": "^gap_[a-z0-9][a-z0-9_-]{0,59}$"
+        },
+        "declaration_origin": {
+          "type": "string",
+          "const": "HUMAN_DECLARED"
+        },
+        "declared_gap_text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 0,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^src_[a-z0-9][a-z0-9_-]{0,59}$"
+          }
+        },
+        "chronology_entry_refs": {
+          "type": "array",
+          "minItems": 0,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^chr_[a-z0-9][a-z0-9_-]{0,59}$"
+          }
+        },
+        "claim_refs": {
+          "type": "array",
+          "minItems": 0,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^clm_[a-z0-9][a-z0-9_-]{0,59}$"
+          }
+        }
+      }
+    }
+  }
+}
