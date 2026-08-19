@@ -11,6 +11,21 @@ The product direction is deliberately bounded:
 2. a future Human Review Workspace for organizing authorized, supplied material
    into review structures and controlled handoff support.
 
+## Originating domain
+
+Governance Contracts was developed in response to challenges found in legally
+sensitive human-review workflows, where source material may be incomplete,
+contested, private, or traumatic.
+
+One motivating domain is the structured review of material concerning
+psychological violence, psychological abuse, and coercive control. The
+repository provides fail-closed contracts for provenance, review boundaries,
+explicit uncertainty, and accountable human decision points.
+
+It does not determine whether psychological violence occurred, assess legal
+admissibility, produce legal findings, or replace courts, legal counsel,
+investigators, or other qualified professionals.
+
 ## Status and limits
 
 This repository is not a deployed service or a complete product. It does not
