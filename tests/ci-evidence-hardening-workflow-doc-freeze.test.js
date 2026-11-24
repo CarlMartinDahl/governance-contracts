@@ -17,11 +17,11 @@ test("CI evidence hardening workflow keeps read-only repository permissions", ()
 test("CI evidence hardening workflow installs from lockfile and runs validation", () => {
   assert.match(
     workflow,
-    /uses:\s+actions\/checkout@11d5960a326750d5838078e36cf38b85af677262/,
+    /uses:\s+actions\/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1/,
   );
   assert.match(
     workflow,
-    /uses:\s+actions\/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020/,
+    /uses:\s+actions\/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1/,
   );
   assert.match(workflow, /persist-credentials:\s+false/);
   assert.match(workflow, /timeout-minutes:\s+20/);
