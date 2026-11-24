@@ -453,9 +453,19 @@ test("completed candidate export remains exact while result transition and valid
     bulletListItems(prohibitedSection),
     prohibitedValidatorNames.map((name) => "`" + name + "`"),
   );
+  const validatorModule = require("../packages/schemas/src/human-review-controlled-handoff-human-professional-approval-decision-basis-evidence-validator.js");
+  const validatorHelperExportName =
+    "validateHumanReviewControlledHandoffHumanProfessionalApprovalDecisionBasisEvidence";
   for (const prohibitedName of prohibitedValidatorNames) {
     assert.equal(docsText.includes("`" + prohibitedName + "`"), true, prohibitedName);
-    assert.equal(Object.hasOwn(packageSchemas, prohibitedName), false, prohibitedName);
+    if (prohibitedName === validatorHelperExportName) {
+      assert.strictEqual(
+        packageSchemas[prohibitedName],
+        validatorModule[prohibitedName],
+      );
+    } else {
+      assert.equal(Object.hasOwn(packageSchemas, prohibitedName), false, prohibitedName);
+    }
   }
   assert.match(
     transitionText,

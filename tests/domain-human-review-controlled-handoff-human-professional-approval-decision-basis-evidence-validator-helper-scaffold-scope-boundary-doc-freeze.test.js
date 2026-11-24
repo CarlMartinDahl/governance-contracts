@@ -259,10 +259,9 @@ test("package index remains unchanged at 13165 lines and non-authorizations are 
     assert.equal(Object.hasOwn(packageSchemas, name), false, name);
   }
 
-  // Transition-aware check: do not hard-forbid future implementation paths directly;
-  // allow either pre-implementation absence or post-prerequisite tracking.
-  const transitionTracked = fs.existsSync(absolute(proofTransitionPath));
-  if (!transitionTracked) {
-    assert.equal(Object.hasOwn(packageSchemas, futureFunctionName), false, futureFunctionName);
-  }
+  const validatorModule = require("../packages/schemas/src/human-review-controlled-handoff-human-professional-approval-decision-basis-evidence-validator.js");
+  assert.strictEqual(
+    packageSchemas[futureFunctionName],
+    validatorModule[futureFunctionName],
+  );
 });

@@ -125,9 +125,12 @@ test("anchor lines, ten denial-proof transitions, and twelve-file future scope a
   }
 });
 
-test("package index remains unchanged and live package-export denial holds before Slice 7", () => {
+test("package index exposes reference-equivalent validator export while retaining three sibling denials", () => {
   assert.equal(typeof validatorModule[validatorHelperExportName], "function");
-  assert.equal(Object.hasOwn(packageSchemas, validatorHelperExportName), false);
+  assert.strictEqual(
+    packageSchemas[validatorHelperExportName],
+    validatorModule[validatorHelperExportName],
+  );
   for (const exportName of retainedValidatorExports) {
     assert.equal(Object.hasOwn(packageSchemas, exportName), false, exportName);
   }

@@ -352,9 +352,19 @@ test("static schemas and exports remain exact while every validator surface stay
     "path",
   ]);
   assert.equal(indexText.split("\n").length - 1, 13165);
+  const validatorModule = require("../packages/schemas/src/human-review-controlled-handoff-human-professional-approval-decision-basis-evidence-validator.js");
+  const validatorHelperExportName =
+    "validateHumanReviewControlledHandoffHumanProfessionalApprovalDecisionBasisEvidence";
   for (const blockedExport of blockedValidatorExports) {
-    assert.equal(Object.hasOwn(packageSchemas, blockedExport), false, blockedExport);
     assert.equal(docsText.includes("`" + blockedExport + "`"), true);
+    if (blockedExport === validatorHelperExportName) {
+      assert.strictEqual(
+        packageSchemas[blockedExport],
+        validatorModule[blockedExport],
+      );
+    } else {
+      assert.equal(Object.hasOwn(packageSchemas, blockedExport), false, blockedExport);
+    }
   }
   const validatorHelperTransitionText = readRequired(proofTransitionDocsPath);
   for (const absentPath of [validatorPath, validatorProofPath]) {

@@ -2042,7 +2042,11 @@ test("candidate and validator-result exports remain exact separate slices", () =
   assertMarkerValue(docsText, "PACKAGE_EXPORT_SEQUENCE_STEP_COUNT", "2");
   assertMarkerValue(docsText, "FUTURE_PROHIBITED_SIBLING_EXPORT_NAME_COUNT", "5");
   for (const name of retainedValidatorNames) {
-    assert.equal(hasExactIdentifier(packageIndexText, name), false, name);
+    assert.equal(
+      hasExactIdentifier(packageIndexText, name),
+      name === validatorHelperExportName,
+      name,
+    );
   }
 });
 
@@ -2709,7 +2713,7 @@ test("proof transition prerequisite and exact 1/7 partition are frozen", () => {
   for (const retainedValidatorName of retainedValidatorNames) {
     assert.equal(
       hasExactIdentifier(packageIndexText, retainedValidatorName),
-      false,
+      retainedValidatorName === validatorHelperExportName,
       retainedValidatorName,
     );
   }

@@ -108,7 +108,10 @@ test("package index remains 13165 lines and preserves current package export pos
   const indexText = readRequired(packageIndexPath);
   assert.equal(indexText.split("\n").length - 1, 13165);
   assert.equal(typeof validatorModule[validatorHelperExportName], "function");
-  assert.equal(Object.hasOwn(packageSchemas, validatorHelperExportName), false);
+  assert.strictEqual(
+    packageSchemas[validatorHelperExportName],
+    validatorModule[validatorHelperExportName],
+  );
   for (const exportName of retainedValidatorExports) {
     assert.equal(Object.hasOwn(packageSchemas, exportName), false, exportName);
   }

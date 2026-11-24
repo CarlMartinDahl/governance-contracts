@@ -205,13 +205,10 @@ test("module exports exactly one unary validator and package index remains uncha
     1,
   );
   assert.equal(readRequired(packageIndexPath).split("\n").length - 1, 13165);
-
-  const packageExportTracked = fs.existsSync(
-    path.join(repoRoot, packageExportScaffoldPath),
+  assert.strictEqual(
+    packageSchemas[functionName],
+    validateHumanReviewControlledHandoffHumanProfessionalApprovalDecisionBasisEvidence,
   );
-  if (!packageExportTracked) {
-    assert.equal(Object.hasOwn(packageSchemas, functionName), false);
-  }
   for (const blockedExport of [
     "humanReviewControlledHandoffHumanProfessionalApprovalDecisionBasisEvidenceValidator",
     "getHumanReviewControlledHandoffHumanProfessionalApprovalDecisionBasisEvidenceValidator",

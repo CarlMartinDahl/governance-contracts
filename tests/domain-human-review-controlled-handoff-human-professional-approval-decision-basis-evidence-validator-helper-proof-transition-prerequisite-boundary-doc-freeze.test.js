@@ -172,10 +172,11 @@ test("package index remains 13165 lines and retained package denials and final s
     assert.equal(Object.hasOwn(packageSchemas, exportName), false, exportName);
   }
 
-  // Transition-aware check for the helper function export: absent until a separate export slice.
-  if (!fs.existsSync(absolute(historicalHelperPaths[0]))) {
-    assert.equal(Object.hasOwn(packageSchemas, validatorHelperExportName), false);
-  }
+  const validatorModule = require("../packages/schemas/src/human-review-controlled-handoff-human-professional-approval-decision-basis-evidence-validator.js");
+  assert.strictEqual(
+    packageSchemas[validatorHelperExportName],
+    validatorModule[validatorHelperExportName],
+  );
 
   assert.match(
     docsText,
