@@ -359,13 +359,24 @@ test("static schemas and exports remain exact while every validator surface stay
   for (const absentPath of [
     validatorPath,
     validatorProofPath,
-    scaffoldDocsPath,
-    scaffoldProofPath,
     proofTransitionDocsPath,
     proofTransitionProofPath,
   ]) {
     assert.equal(fs.existsSync(absolute(absentPath)), false, absentPath);
   }
+  for (const trackedScaffoldPath of [scaffoldDocsPath, scaffoldProofPath]) {
+    assert.equal(
+      fs.existsSync(absolute(trackedScaffoldPath)),
+      true,
+      trackedScaffoldPath,
+    );
+  }
+  const scaffoldDocsText = readRequired(scaffoldDocsPath);
+  assert.match(
+    scaffoldDocsText,
+    /^TRACKED_DOCS_ONLY_INTERNAL_VALIDATOR_HELPER_SCOPE_DEFINED$/mu,
+  );
+  assert.match(scaffoldDocsText, /^VALIDATOR_NOT_CREATED_BY_THIS_SLICE$/mu);
 });
 
 test("readiness is blocked by exactly eight open scope decisions", () => {
