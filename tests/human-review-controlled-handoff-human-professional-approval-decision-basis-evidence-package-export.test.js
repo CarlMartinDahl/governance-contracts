@@ -275,13 +275,23 @@ test("candidate export keeps validator and dispatch siblings separate while resu
     false,
   );
   assert.equal(prohibitedSiblingExports.length, 4);
+  const validatorModule = require("../packages/schemas/src/human-review-controlled-handoff-human-professional-approval-decision-basis-evidence-validator.js");
+  const validatorHelperExportName =
+    "validateHumanReviewControlledHandoffHumanProfessionalApprovalDecisionBasisEvidence";
   for (const prohibitedExport of prohibitedSiblingExports) {
     assert.equal(scopeText.includes("`" + prohibitedExport + "`"), true);
-    assert.equal(
-      Object.hasOwn(packageSchemas, prohibitedExport),
-      false,
-      prohibitedExport,
-    );
+    if (prohibitedExport === validatorHelperExportName) {
+      assert.strictEqual(
+        packageSchemas[prohibitedExport],
+        validatorModule[prohibitedExport],
+      );
+    } else {
+      assert.equal(
+        Object.hasOwn(packageSchemas, prohibitedExport),
+        false,
+        prohibitedExport,
+      );
+    }
   }
 });
 
@@ -377,7 +387,6 @@ test("static schema-object export exposes no callable validation approval or han
   assert.equal(typeof exportedSchema, "object");
   assert.equal(containsCallable(exportedSchema), false);
   for (const behaviorName of [
-    "validateHumanReviewControlledHandoffHumanProfessionalApprovalDecisionBasisEvidence",
     "verifyHumanReviewControlledHandoffHumanProfessionalApprovalDecisionBasisEvidence",
     "approveHumanReviewControlledHandoffHumanProfessionalApprovalDecisionBasisEvidence",
     "deliverHumanReviewControlledHandoffHumanProfessionalApprovalDecisionBasisEvidence",

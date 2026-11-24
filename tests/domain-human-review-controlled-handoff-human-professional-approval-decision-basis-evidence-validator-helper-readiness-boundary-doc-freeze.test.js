@@ -352,20 +352,56 @@ test("static schemas and exports remain exact while every validator surface stay
     "path",
   ]);
   assert.equal(indexText.split("\n").length - 1, 13165);
+  const validatorModule = require("../packages/schemas/src/human-review-controlled-handoff-human-professional-approval-decision-basis-evidence-validator.js");
+  const validatorHelperExportName =
+    "validateHumanReviewControlledHandoffHumanProfessionalApprovalDecisionBasisEvidence";
   for (const blockedExport of blockedValidatorExports) {
-    assert.equal(Object.hasOwn(packageSchemas, blockedExport), false, blockedExport);
     assert.equal(docsText.includes("`" + blockedExport + "`"), true);
+    if (blockedExport === validatorHelperExportName) {
+      assert.strictEqual(
+        packageSchemas[blockedExport],
+        validatorModule[blockedExport],
+      );
+    } else {
+      assert.equal(Object.hasOwn(packageSchemas, blockedExport), false, blockedExport);
+    }
   }
-  for (const absentPath of [
-    validatorPath,
-    validatorProofPath,
+  const validatorHelperTransitionText = readRequired(proofTransitionDocsPath);
+  for (const absentPath of [validatorPath, validatorProofPath]) {
+    assert.equal(
+      validatorHelperTransitionText.includes(
+        "`" +
+          absentPath +
+          "` | `LIVE_ABSENCE_ASSERTION_TRANSITIONED_FOR_SEPARATE_LATER_RUNTIME_CHANGE_SLICE`",
+      ),
+      true,
+      absentPath,
+    );
+    assert.equal(docsText.includes("`" + absentPath + "`"), true, absentPath);
+  }
+  for (const trackedDocsOnlyPath of [
     scaffoldDocsPath,
     scaffoldProofPath,
     proofTransitionDocsPath,
     proofTransitionProofPath,
   ]) {
-    assert.equal(fs.existsSync(absolute(absentPath)), false, absentPath);
+    assert.equal(
+      fs.existsSync(absolute(trackedDocsOnlyPath)),
+      true,
+      trackedDocsOnlyPath,
+    );
   }
+  const scaffoldDocsText = readRequired(scaffoldDocsPath);
+  assert.match(
+    scaffoldDocsText,
+    /^TRACKED_DOCS_ONLY_INTERNAL_VALIDATOR_HELPER_SCOPE_DEFINED$/mu,
+  );
+  assert.match(scaffoldDocsText, /^VALIDATOR_NOT_CREATED_BY_THIS_SLICE$/mu);
+  assert.match(
+    validatorHelperTransitionText,
+    /^TRACKED_DOCS_ONLY_VALIDATOR_HELPER_PROOF_TRANSITION_COMPLETE$/mu,
+  );
+  assert.match(validatorHelperTransitionText, /^HELPER_NOT_CREATED_BY_THIS_SLICE$/mu);
 });
 
 test("readiness is blocked by exactly eight open scope decisions", () => {

@@ -738,6 +738,9 @@ test("docs-only scope preserves history while both package exports are aligned",
     false,
   );
   assert.deepEqual(retainedValidatorSurfaces, retainedLaterSurfaces.slice(4));
+  const validatorHelperTransitionText = readRequired(
+    "docs/DOMAIN_CONTRACTS_HUMAN_REVIEW_CONTROLLED_HANDOFF_HUMAN_PROFESSIONAL_APPROVAL_DECISION_BASIS_EVIDENCE_VALIDATOR_HELPER_PROOF_TRANSITION_PREREQUISITE_BOUNDARY_v1.md",
+  );
   for (const retainedSurface of retainedValidatorSurfaces) {
     assert.equal(
       validatorResultTransitionText.includes(
@@ -746,7 +749,15 @@ test("docs-only scope preserves history while both package exports are aligned",
       true,
       retainedSurface,
     );
-    assert.equal(fs.existsSync(absolute(retainedSurface)), false, retainedSurface);
+    assert.equal(
+      validatorHelperTransitionText.includes(
+        "`" +
+          retainedSurface +
+          "` | `LIVE_ABSENCE_ASSERTION_TRANSITIONED_FOR_SEPARATE_LATER_RUNTIME_CHANGE_SLICE`",
+      ),
+      true,
+      retainedSurface,
+    );
   }
   assert.match(
     validatorResultPackageExportTransitionText,

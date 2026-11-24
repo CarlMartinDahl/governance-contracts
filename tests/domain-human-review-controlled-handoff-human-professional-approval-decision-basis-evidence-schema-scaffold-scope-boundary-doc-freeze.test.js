@@ -473,6 +473,9 @@ test("historical scaffold scope remains exact while export proofs are aligned", 
     ),
     false,
   );
+  const validatorHelperTransitionText = readRequired(
+    "docs/DOMAIN_CONTRACTS_HUMAN_REVIEW_CONTROLLED_HANDOFF_HUMAN_PROFESSIONAL_APPROVAL_DECISION_BASIS_EVIDENCE_VALIDATOR_HELPER_PROOF_TRANSITION_PREREQUISITE_BOUNDARY_v1.md",
+  );
   for (const retainedSiblingPath of retainedValidatorSiblingPaths) {
     assert.equal(
       validatorResultTransitionText.includes(
@@ -489,8 +492,12 @@ test("historical scaffold scope remains exact while export proofs are aligned", 
       retainedSiblingPath,
     );
     assert.equal(
-      fs.existsSync(absolute(retainedSiblingPath)),
-      false,
+      validatorHelperTransitionText.includes(
+        "`" +
+          retainedSiblingPath +
+          "` | `LIVE_ABSENCE_ASSERTION_TRANSITIONED_FOR_SEPARATE_LATER_RUNTIME_CHANGE_SLICE`",
+      ),
+      true,
       retainedSiblingPath,
     );
   }

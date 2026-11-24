@@ -624,20 +624,47 @@ function assertPendingOrAlignedResultExportProof(
       0,
       label + ": validator-result export proof live absence must be removed",
     );
+    const validatorHelperProofTransitionPath =
+      "docs/DOMAIN_CONTRACTS_HUMAN_REVIEW_CONTROLLED_HANDOFF_HUMAN_PROFESSIONAL_APPROVAL_DECISION_BASIS_EVIDENCE_VALIDATOR_HELPER_PROOF_TRANSITION_PREREQUISITE_BOUNDARY_v1.md";
+    const validatorHelperTransitioned = text.includes(
+      validatorHelperProofTransitionPath,
+    );
+    const validatorHelperTransitionText = validatorHelperTransitioned
+      ? readRequired(validatorHelperProofTransitionPath)
+      : "";
     for (const validatorPath of retainedValidatorPaths) {
       const absoluteValidatorPath = path.resolve(absolute(validatorPath));
-      assert.equal(
-        trace.existsCalls.filter(
-          (call) => call.path === absoluteValidatorPath,
-        ).length,
-        1,
-        label + ": " + validatorPath,
-      );
-      assert.equal(
-        targetRejectsPresentPath(label, validatorPath),
-        true,
-        label + ": present-path simulation must fail closed for " + validatorPath,
-      );
+      if (validatorHelperTransitioned) {
+        assert.equal(
+          trace.existsCalls.filter(
+            (call) => call.path === absoluteValidatorPath,
+          ).length,
+          0,
+          label + ": transitioned helper path must not be live-probed " + validatorPath,
+        );
+        assert.equal(
+          validatorHelperTransitionText.includes(
+            "`" +
+              validatorPath +
+              "` | `LIVE_ABSENCE_ASSERTION_TRANSITIONED_FOR_SEPARATE_LATER_RUNTIME_CHANGE_SLICE`",
+          ),
+          true,
+          label + ": " + validatorPath,
+        );
+      } else {
+        assert.equal(
+          trace.existsCalls.filter(
+            (call) => call.path === absoluteValidatorPath,
+          ).length,
+          1,
+          label + ": " + validatorPath,
+        );
+        assert.equal(
+          targetRejectsPresentPath(label, validatorPath),
+          true,
+          label + ": present-path simulation must fail closed for " + validatorPath,
+        );
+      }
     }
   } else {
     for (const fragment of pendingFragments) {
@@ -807,16 +834,12 @@ test("result-export alignment requires an executed anchor and retained validator
     "readRequired(" +
     JSON.stringify(recoveryTransitionPath) +
     ");\n";
-  const retainedValidatorChecks = validatorPaths
-    .map(
-      (validatorPath) =>
-        "assert.equal(fs.existsSync(" +
-        JSON.stringify(validatorPath) +
-        "), false, " +
-        JSON.stringify(validatorPath) +
-        ");",
-    )
-    .join("\n");
+  const validatorHelperTransitionPath =
+    "docs/DOMAIN_CONTRACTS_HUMAN_REVIEW_CONTROLLED_HANDOFF_HUMAN_PROFESSIONAL_APPROVAL_DECISION_BASIS_EVIDENCE_VALIDATOR_HELPER_PROOF_TRANSITION_PREREQUISITE_BOUNDARY_v1.md";
+  const retainedValidatorChecks =
+    "readRequired(" +
+    JSON.stringify(absolute(validatorHelperTransitionPath)) +
+    ");";
   const bareValidatorChecks = validatorPaths
     .map((validatorPath) => "fs.existsSync(" + JSON.stringify(validatorPath) + ");")
     .join("\n");
@@ -901,12 +924,12 @@ test("result-export alignment requires an executed anchor and retained validator
       "\n",
     alignedMissingValidator:
       alignedPrefix +
-      "assert.equal(fs.existsSync(" +
-      JSON.stringify(validatorPaths[0]) +
-      "), false, " +
-      JSON.stringify(validatorPaths[0]) +
+      retainedValidatorChecks +
+      "\nfs.existsSync(" +
+      JSON.stringify(validatorPaths[1]) +
       ");\n",
-    alignedBareValidator: alignedPrefix + bareValidatorChecks + "\n",
+    alignedBareValidator:
+      alignedPrefix + retainedValidatorChecks + "\n" + bareValidatorChecks + "\n",
   };
 
   try {
@@ -1026,7 +1049,7 @@ test("result-export alignment requires an executed anchor and retained validator
           fixturePaths.alignedBareValidator,
           [],
         ),
-      /present-path simulation must fail closed/u,
+      /transitioned helper path must not be live-probed/u,
     );
   } finally {
     fs.rmSync(tempDirectory, { recursive: true, force: true });
@@ -1303,12 +1326,24 @@ test("result-export recovery records one omitted contract proof and preserves th
   } else {
     assert.equal(resultExportAbsenceCalls.length, 1);
   }
+  const validatorHelperTransitionText = readRequired(
+    "docs/DOMAIN_CONTRACTS_HUMAN_REVIEW_CONTROLLED_HANDOFF_HUMAN_PROFESSIONAL_APPROVAL_DECISION_BASIS_EVIDENCE_VALIDATOR_HELPER_PROOF_TRANSITION_PREREQUISITE_BOUNDARY_v1.md",
+  );
   for (const validatorPath of retainedValidatorPaths) {
     assert.equal(
       transition.trace.existsCalls.filter(
         (call) => call.path === path.resolve(absolute(validatorPath)),
       ).length,
-      1,
+      0,
+      validatorPath,
+    );
+    assert.equal(
+      validatorHelperTransitionText.includes(
+        "`" +
+          validatorPath +
+          "` | `LIVE_ABSENCE_ASSERTION_TRANSITIONED_FOR_SEPARATE_LATER_RUNTIME_CHANGE_SLICE`",
+      ),
+      true,
       validatorPath,
     );
   }
@@ -2007,7 +2042,11 @@ test("candidate and validator-result exports remain exact separate slices", () =
   assertMarkerValue(docsText, "PACKAGE_EXPORT_SEQUENCE_STEP_COUNT", "2");
   assertMarkerValue(docsText, "FUTURE_PROHIBITED_SIBLING_EXPORT_NAME_COUNT", "5");
   for (const name of retainedValidatorNames) {
-    assert.equal(hasExactIdentifier(packageIndexText, name), false, name);
+    assert.equal(
+      hasExactIdentifier(packageIndexText, name),
+      name === validatorHelperExportName,
+      name,
+    );
   }
 });
 
@@ -2657,13 +2696,24 @@ test("proof transition prerequisite and exact 1/7 partition are frozen", () => {
     ),
     false,
   );
+  const validatorHelperTransitionText = readRequired(
+    "docs/DOMAIN_CONTRACTS_HUMAN_REVIEW_CONTROLLED_HANDOFF_HUMAN_PROFESSIONAL_APPROVAL_DECISION_BASIS_EVIDENCE_VALIDATOR_HELPER_PROOF_TRANSITION_PREREQUISITE_BOUNDARY_v1.md",
+  );
   for (const validatorPath of retainedValidatorPaths) {
-    assert.equal(fs.existsSync(absolute(validatorPath)), false, validatorPath);
+    assert.equal(
+      validatorHelperTransitionText.includes(
+        "`" +
+          validatorPath +
+          "` | `LIVE_ABSENCE_ASSERTION_TRANSITIONED_FOR_SEPARATE_LATER_RUNTIME_CHANGE_SLICE`",
+      ),
+      true,
+      validatorPath,
+    );
   }
   for (const retainedValidatorName of retainedValidatorNames) {
     assert.equal(
       hasExactIdentifier(packageIndexText, retainedValidatorName),
-      false,
+      retainedValidatorName === validatorHelperExportName,
       retainedValidatorName,
     );
   }

@@ -132,7 +132,16 @@ test("completed candidate schema export remains unchanged", () => {
 });
 
 test("validator implementation helper lookup and registry exports remain absent", () => {
-  for (const blockedExport of blockedValidatorExports) {
+  const validatorModule = require("../packages/schemas/src/human-review-controlled-handoff-human-professional-approval-decision-basis-evidence-validator.js");
+  const validatorHelperExportName =
+    "validateHumanReviewControlledHandoffHumanProfessionalApprovalDecisionBasisEvidence";
+  assert.strictEqual(
+    packageSchemas[validatorHelperExportName],
+    validatorModule[validatorHelperExportName],
+  );
+  for (const blockedExport of blockedValidatorExports.filter(
+    (name) => name !== validatorHelperExportName,
+  )) {
     assert.equal(
       Object.hasOwn(packageSchemas, blockedExport),
       false,
