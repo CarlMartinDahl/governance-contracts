@@ -719,6 +719,9 @@ test("proof transitions preserve schema candidates and retain validator absences
       candidatePath,
     );
   }
+  const validatorHelperTransitionText = readRequired(
+    "docs/DOMAIN_CONTRACTS_HUMAN_REVIEW_CONTROLLED_HANDOFF_HUMAN_PROFESSIONAL_APPROVAL_DECISION_BASIS_EVIDENCE_VALIDATOR_HELPER_PROOF_TRANSITION_PREREQUISITE_BOUNDARY_v1.md",
+  );
   for (const retainedPath of retainedValidatorPaths) {
     assert.equal(
       transitionText.includes(
@@ -733,7 +736,19 @@ test("proof transitions preserve schema candidates and retain validator absences
       true,
       retainedPath,
     );
-    assert.equal(fs.existsSync(absolute(retainedPath)), false, retainedPath);
+    assert.equal(
+      validatorHelperTransitionText.includes(
+        fence +
+          retainedPath +
+          fence +
+          " | " +
+          fence +
+          "LIVE_ABSENCE_ASSERTION_TRANSITIONED_FOR_SEPARATE_LATER_RUNTIME_CHANGE_SLICE" +
+          fence,
+      ),
+      true,
+      retainedPath,
+    );
   }
   assert.equal(
     candidatePackageExportTransitionText.includes(

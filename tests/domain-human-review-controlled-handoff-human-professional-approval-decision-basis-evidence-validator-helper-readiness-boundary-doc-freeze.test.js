@@ -356,19 +356,29 @@ test("static schemas and exports remain exact while every validator surface stay
     assert.equal(Object.hasOwn(packageSchemas, blockedExport), false, blockedExport);
     assert.equal(docsText.includes("`" + blockedExport + "`"), true);
   }
-  for (const absentPath of [
-    validatorPath,
-    validatorProofPath,
+  const validatorHelperTransitionText = readRequired(proofTransitionDocsPath);
+  for (const absentPath of [validatorPath, validatorProofPath]) {
+    assert.equal(
+      validatorHelperTransitionText.includes(
+        "`" +
+          absentPath +
+          "` | `LIVE_ABSENCE_ASSERTION_TRANSITIONED_FOR_SEPARATE_LATER_RUNTIME_CHANGE_SLICE`",
+      ),
+      true,
+      absentPath,
+    );
+    assert.equal(docsText.includes("`" + absentPath + "`"), true, absentPath);
+  }
+  for (const trackedDocsOnlyPath of [
+    scaffoldDocsPath,
+    scaffoldProofPath,
     proofTransitionDocsPath,
     proofTransitionProofPath,
   ]) {
-    assert.equal(fs.existsSync(absolute(absentPath)), false, absentPath);
-  }
-  for (const trackedScaffoldPath of [scaffoldDocsPath, scaffoldProofPath]) {
     assert.equal(
-      fs.existsSync(absolute(trackedScaffoldPath)),
+      fs.existsSync(absolute(trackedDocsOnlyPath)),
       true,
-      trackedScaffoldPath,
+      trackedDocsOnlyPath,
     );
   }
   const scaffoldDocsText = readRequired(scaffoldDocsPath);
@@ -377,6 +387,11 @@ test("static schemas and exports remain exact while every validator surface stay
     /^TRACKED_DOCS_ONLY_INTERNAL_VALIDATOR_HELPER_SCOPE_DEFINED$/mu,
   );
   assert.match(scaffoldDocsText, /^VALIDATOR_NOT_CREATED_BY_THIS_SLICE$/mu);
+  assert.match(
+    validatorHelperTransitionText,
+    /^TRACKED_DOCS_ONLY_VALIDATOR_HELPER_PROOF_TRANSITION_COMPLETE$/mu,
+  );
+  assert.match(validatorHelperTransitionText, /^HELPER_NOT_CREATED_BY_THIS_SLICE$/mu);
 });
 
 test("readiness is blocked by exactly eight open scope decisions", () => {

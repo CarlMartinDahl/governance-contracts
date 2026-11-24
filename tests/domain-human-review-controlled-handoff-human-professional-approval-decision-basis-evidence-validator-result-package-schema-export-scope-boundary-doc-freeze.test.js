@@ -434,8 +434,19 @@ test("completed candidate export remains exact while result transition and valid
     ),
     false,
   );
+  const validatorHelperTransitionText = readRequired(
+    "docs/DOMAIN_CONTRACTS_HUMAN_REVIEW_CONTROLLED_HANDOFF_HUMAN_PROFESSIONAL_APPROVAL_DECISION_BASIS_EVIDENCE_VALIDATOR_HELPER_PROOF_TRANSITION_PREREQUISITE_BOUNDARY_v1.md",
+  );
   for (const validatorPath of retainedValidatorPaths) {
-    assert.equal(fs.existsSync(absolute(validatorPath)), false, validatorPath);
+    assert.equal(
+      validatorHelperTransitionText.includes(
+        "`" +
+          validatorPath +
+          "` | `LIVE_ABSENCE_ASSERTION_TRANSITIONED_FOR_SEPARATE_LATER_RUNTIME_CHANGE_SLICE`",
+      ),
+      true,
+      validatorPath,
+    );
   }
   assert.match(docsText, /FUTURE_PROHIBITED_VALIDATOR_EXPORT_NAME_COUNT:\n4/u);
   assert.deepEqual(

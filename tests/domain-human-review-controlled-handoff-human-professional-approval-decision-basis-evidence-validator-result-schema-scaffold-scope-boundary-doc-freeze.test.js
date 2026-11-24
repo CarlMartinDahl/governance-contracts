@@ -1164,24 +1164,53 @@ test("proof transition prerequisite freezes the six-file conflict and exact 2/4 
         true,
         alignmentPath + ": exact pending or aligned result-export posture",
       );
-      const retainedPaths = resultExportAligned
-        ? retainedValidatorPaths
-        : [validatorResultPackageExportProofPath, ...retainedValidatorPaths];
-      for (const retainedPath of retainedPaths) {
+      const validatorHelperProofTransitionPath =
+        "docs/DOMAIN_CONTRACTS_HUMAN_REVIEW_CONTROLLED_HANDOFF_HUMAN_PROFESSIONAL_APPROVAL_DECISION_BASIS_EVIDENCE_VALIDATOR_HELPER_PROOF_TRANSITION_PREREQUISITE_BOUNDARY_v1.md";
+      const validatorHelperTransitionText = readRequired(
+        validatorHelperProofTransitionPath,
+      );
+      if (!resultExportAligned) {
+        const resultExportRetainedCalls = executedCalls.filter(
+          (call) => call.path === absolute(validatorResultPackageExportProofPath),
+        );
+        assert.equal(
+          resultExportRetainedCalls.length > 0,
+          true,
+          alignmentPath + ": " + validatorResultPackageExportProofPath,
+        );
+        assert.equal(
+          resultExportRetainedCalls.every(
+            (call) => typeof call.assertedFalseStack === "string",
+          ),
+          true,
+          alignmentPath +
+            ": " +
+            validatorResultPackageExportProofPath +
+            " false assertion",
+        );
+      }
+      assert.equal(
+        source.includes(validatorHelperProofTransitionPath),
+        true,
+        alignmentPath + ": validator-helper transition anchor",
+      );
+      for (const retainedPath of retainedValidatorPaths) {
         const retainedCalls = executedCalls.filter(
           (call) => call.path === absolute(retainedPath),
         );
         assert.equal(
-          retainedCalls.length > 0,
-          true,
-          alignmentPath + ": " + retainedPath,
+          retainedCalls.length,
+          0,
+          alignmentPath + ": transitioned helper path " + retainedPath,
         );
         assert.equal(
-          retainedCalls.every(
-            (call) => typeof call.assertedFalseStack === "string",
+          validatorHelperTransitionText.includes(
+            "`" +
+              retainedPath +
+              "` | `LIVE_ABSENCE_ASSERTION_TRANSITIONED_FOR_SEPARATE_LATER_RUNTIME_CHANGE_SLICE`",
           ),
           true,
-          alignmentPath + ": " + retainedPath + " false assertion",
+          alignmentPath + ": " + retainedPath,
         );
       }
       if (resultExportAligned) {
@@ -1270,17 +1299,22 @@ test("proof transition prerequisite freezes the six-file conflict and exact 2/4 
       false,
       proofPath + ": " + validatorResultPackageExportProofPath,
     );
+    const validatorHelperTransitionText = readRequired(
+      "docs/DOMAIN_CONTRACTS_HUMAN_REVIEW_CONTROLLED_HANDOFF_HUMAN_PROFESSIONAL_APPROVAL_DECISION_BASIS_EVIDENCE_VALIDATOR_HELPER_PROOF_TRANSITION_PREREQUISITE_BOUNDARY_v1.md",
+    );
     for (const validatorPath of retainedValidatorPaths) {
       const validatorCalls = resultExportTransitionedCalls.filter(
         (call) => call.path === absolute(validatorPath),
       );
-      assert.equal(validatorCalls.length > 0, true, proofPath + ": " + validatorPath);
+      assert.equal(validatorCalls.length, 0, proofPath + ": " + validatorPath);
       assert.equal(
-        validatorCalls.every(
-          (call) => typeof call.assertedFalseStack === "string",
+        validatorHelperTransitionText.includes(
+          "`" +
+            validatorPath +
+            "` | `LIVE_ABSENCE_ASSERTION_TRANSITIONED_FOR_SEPARATE_LATER_RUNTIME_CHANGE_SLICE`",
         ),
         true,
-        proofPath + ": " + validatorPath + " false assertion",
+        proofPath + ": " + validatorPath,
       );
     }
   }
@@ -1371,6 +1405,9 @@ test("proof transition prerequisite freezes the six-file conflict and exact 2/4 
     );
   }
   assert.equal(retainedValidatorPaths.length, 2);
+  const validatorHelperTransitionText = readRequired(
+    "docs/DOMAIN_CONTRACTS_HUMAN_REVIEW_CONTROLLED_HANDOFF_HUMAN_PROFESSIONAL_APPROVAL_DECISION_BASIS_EVIDENCE_VALIDATOR_HELPER_PROOF_TRANSITION_PREREQUISITE_BOUNDARY_v1.md",
+  );
   for (const retainedPath of retainedValidatorPaths) {
     assert.equal(docsText.includes("`" + retainedPath + "`"), true, retainedPath);
     assert.equal(
@@ -1380,7 +1417,15 @@ test("proof transition prerequisite freezes the six-file conflict and exact 2/4 
       true,
       retainedPath,
     );
-    assert.equal(fs.existsSync(absolute(retainedPath)), false, retainedPath);
+    assert.equal(
+      validatorHelperTransitionText.includes(
+        "`" +
+          retainedPath +
+          "` | `LIVE_ABSENCE_ASSERTION_TRANSITIONED_FOR_SEPARATE_LATER_RUNTIME_CHANGE_SLICE`",
+      ),
+      true,
+      retainedPath,
+    );
   }
   assert.equal(
     packageExportTransitionText.includes(

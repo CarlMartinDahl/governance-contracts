@@ -580,7 +580,7 @@ test("two-file readiness scope preserves history current partition and no conclu
     ),
     (match) => [match[1], match[2]],
   );
-  assert.deepEqual(liveAbsenceOperands, [["retainedPath", "retainedPath"]]);
+  assert.deepEqual(liveAbsenceOperands, []);
   for (const historicalRetainedPath of historicalValidatorResultRetainedPaths) {
     assert.equal(
       validatorResultTransitionText.includes(
@@ -615,6 +615,9 @@ test("two-file readiness scope preserves history current partition and no conclu
     false,
   );
   assert.deepEqual(retainedValidatorPaths, reservedLaterPaths.slice(4));
+  const validatorHelperTransitionText = readRequired(
+    "docs/DOMAIN_CONTRACTS_HUMAN_REVIEW_CONTROLLED_HANDOFF_HUMAN_PROFESSIONAL_APPROVAL_DECISION_BASIS_EVIDENCE_VALIDATOR_HELPER_PROOF_TRANSITION_PREREQUISITE_BOUNDARY_v1.md",
+  );
   for (const retainedPath of retainedValidatorPaths) {
     assert.equal(
       validatorResultTransitionText.includes(
@@ -623,7 +626,15 @@ test("two-file readiness scope preserves history current partition and no conclu
       true,
       retainedPath,
     );
-    assert.equal(fs.existsSync(absolute(retainedPath)), false, retainedPath);
+    assert.equal(
+      validatorHelperTransitionText.includes(
+        "`" +
+          retainedPath +
+          "` | `LIVE_ABSENCE_ASSERTION_TRANSITIONED_FOR_SEPARATE_LATER_RUNTIME_CHANGE_SLICE`",
+      ),
+      true,
+      retainedPath,
+    );
   }
   assert.match(
     validatorResultPackageExportTransitionText,
